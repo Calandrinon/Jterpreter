@@ -117,9 +117,9 @@ public class View {
 
         while (this.running) {
             this.print_menu();
-            this.read_option();
 
             try {
+                this.read_option();
                 switch (this.option) {
                     case 0 -> this.running = false;
                     case 1 -> this.add_tomato();
@@ -134,6 +134,8 @@ public class View {
                 }
             } catch (RepositoryException re) {
                 System.out.println(re.getMessage());
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please enter a number...");
             }
         }
     }
