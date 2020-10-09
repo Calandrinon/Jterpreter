@@ -8,5 +8,4 @@ public interface RepositoryInterface {
     void remove(int id) throws RepositoryException;
     Vegetable[] get_container();
     int get_size();
-    Vegetable get_by_id(int id) throws RepositoryException;
 }

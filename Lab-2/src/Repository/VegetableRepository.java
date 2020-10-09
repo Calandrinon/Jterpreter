@@ -51,16 +51,6 @@ public class VegetableRepository implements RepositoryInterface {
         return this.container;
     }
 
-    public Vegetable get_by_id(int id) throws RepositoryException {
-        for (Vegetable vegetable: this.container) {
-            if (vegetable.get_id() == id) {
-                return vegetable;
-            }
-        }
-
-        throw new RepositoryException("The vegetable with the given id does not exist.");
-    }
-
     public int get_size() {
         return this.number_of_vegetables;
     }
