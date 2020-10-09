@@ -5,12 +5,12 @@ import Model.Eggplant;
 import Model.Pepper;
 import Model.Tomato;
 import Model.Vegetable;
-import Repository.VegetableRepository;
+import Repository.RepositoryInterface;
 
 public class Controller {
-    private final VegetableRepository repository;
+    private final RepositoryInterface repository;
 
-    public Controller(VegetableRepository repository) {
+    public Controller(RepositoryInterface repository) {
         this.repository = repository;
     }
 
