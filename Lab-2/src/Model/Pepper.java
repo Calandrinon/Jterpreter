@@ -1,10 +1,10 @@
 package Model;
 
-public class Pepper {
+public class Pepper implements Vegetable {
     private final double weight_in_kg, price;
     private final int id;
 
-    Pepper(int id, double weight_in_kg, double price) {
+    public Pepper(int id, double weight_in_kg, double price) {
         this.weight_in_kg = weight_in_kg;
         this.price = price;
         this.id = id;
@@ -24,5 +24,9 @@ public class Pepper {
 
     public boolean is_heavy() {
         return this.weight_in_kg > 0.2;
+    }
+
+    public String toString() {
+        return "Pepper|ID: " + Integer.toString(this.id) + "; Weight(kg): " + Double.toString(this.weight_in_kg) + "; Price: " + Double.toString(this.price);
     }
 }

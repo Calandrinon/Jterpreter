@@ -1,10 +1,10 @@
 package Model;
 
-public class Eggplant {
+public class Eggplant implements Vegetable {
     private final double weight_in_kg, price;
     private final int id;
 
-    Eggplant(int id, double weight_in_kg, double price) {
+    public Eggplant(int id, double weight_in_kg, double price) {
         this.weight_in_kg = weight_in_kg;
         this.price = price;
         this.id = id;
@@ -24,5 +24,9 @@ public class Eggplant {
 
     public boolean is_heavy() {
         return this.weight_in_kg > 0.2;
+    }
+
+    public String toString() {
+        return "Eggplant|ID: " + Integer.toString(this.id) + "; Weight(kg): " + Double.toString(this.weight_in_kg) + "; Price: " + Double.toString(this.price);
     }
 }

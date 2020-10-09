@@ -7,7 +7,7 @@ public class VegetableRepository implements RepositoryInterface {
     private final Vegetable[] container;
     private int number_of_vegetables;
 
-    VegetableRepository(int size) throws RepositoryException {
+    public VegetableRepository(int size) throws RepositoryException {
         if (size <= 0)
             throw new RepositoryException("Repository size should be greater than 0.");
         this.container = new Vegetable[size];
@@ -18,9 +18,12 @@ public class VegetableRepository implements RepositoryInterface {
         if (this.number_of_vegetables == this.container.length)
             throw new RepositoryException("There is no more space in the container.");
 
-        for (Vegetable obj: this.container) {
-            if (obj.get_id() == vegetable.get_id()) {
-                throw new RepositoryException("There is already a vegetable with that id!");
+        if (this.number_of_vegetables > 0) {
+            for (int vegetable_index = 0; vegetable_index < this.number_of_vegetables; vegetable_index++) {
+                Vegetable iterated_vegetable = this.container[vegetable_index];
+                if (iterated_vegetable.get_id() == vegetable.get_id()) {
+                    throw new RepositoryException("There is already a vegetable with that id!");
+                }
             }
         }
 
@@ -33,6 +36,7 @@ public class VegetableRepository implements RepositoryInterface {
             if (container[vegetable_index].get_id() == id) {
                 while (vegetable_index < this.number_of_vegetables - 1) {
                     container[vegetable_index] = container[vegetable_index + 1];
+                    vegetable_index++;
                 }
 
                 this.number_of_vegetables--;
@@ -55,5 +59,9 @@ public class VegetableRepository implements RepositoryInterface {
         }
 
         throw new RepositoryException("The vegetable with the given id does not exist.");
+    }
+
+    public int get_size() {
+        return this.number_of_vegetables;
     }
 }
