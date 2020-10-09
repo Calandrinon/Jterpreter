@@ -15,4 +15,8 @@ public class Pepper {
     public double get_price() {
         return this.price;
     }
+
+    public boolean is_heavy() {
+        return this.weight_in_kg > 0.2;
+    }
 }
