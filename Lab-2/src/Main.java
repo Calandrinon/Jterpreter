@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws RepositoryException, IOException {
-        VegetableRepository repository = new VegetableRepository(50);
+        VegetableRepository repository = new VegetableRepository(10);
         Controller controller = new Controller(repository);
         View view = new View(controller);
         view.run();
