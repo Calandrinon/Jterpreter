@@ -21,7 +21,7 @@ public class Controller {
         if (container_size > 0) {
             for (int vegetable_index = 0; vegetable_index < container_size; vegetable_index++) {
                 Vegetable vegetable = container[vegetable_index];
-                if (vegetable.get_weight() > 0.2)
+                if (vegetable.is_heavy())
                     filtered_content += vegetable.toString() + "\n";
             }
         }
