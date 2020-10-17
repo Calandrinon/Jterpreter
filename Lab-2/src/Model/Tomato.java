@@ -10,18 +10,25 @@ public class Tomato implements Vegetable {
         this.id = id;
     }
 
+    @Override
     public int get_id() {
         return this.id;
     }
 
+
+    @Override
     public double get_weight() {
         return this.weight_in_kg;
     }
 
+
+    @Override
     public double get_price() {
         return this.price;
     }
 
+
+    @Override
     public boolean is_heavy() {
         return this.weight_in_kg > 0.2;
     }

@@ -114,6 +114,8 @@ public class View {
         this.controller.add_tomato(1, 0.1, 0.2);
         this.controller.add_pepper(2, 0.3, 0.4);
         this.controller.add_eggplant(3, 0.9, 0.7);
+        this.controller.add_eggplant(4, 0.9, 0.7);
+        this.controller.add_eggplant(5, 0.9, 0.7);
 
         while (this.running) {
             this.print_menu();
