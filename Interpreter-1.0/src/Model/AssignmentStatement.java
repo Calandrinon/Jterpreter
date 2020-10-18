@@ -5,6 +5,11 @@ public class AssignmentStatement implements StatementInterface {
     String id;
     GeneralExpression expression;
 
+    public AssignmentStatement(String id, GeneralExpression expression) {
+        this.id = id;
+        this.expression = expression;
+    }
+
     public String toString() {
         return id + "=" + expression.toString();
     }

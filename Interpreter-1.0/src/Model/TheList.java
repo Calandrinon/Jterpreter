@@ -25,6 +25,11 @@ public class TheList<T> implements ListInterface<T> {
     }
 
     @Override
+    public T get(int index) {
+        return list.get(index);
+    }
+
+    @Override
     public void set(int index, T element) {
         list.set(index, element);
     }

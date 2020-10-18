@@ -17,4 +17,9 @@ public class TheStack<T> implements StackInterface<T> {
     public T pop() {
         return stack.pop();
     }
+
+    @Override
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
 }

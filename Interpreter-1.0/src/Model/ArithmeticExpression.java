@@ -6,6 +6,22 @@ public class ArithmeticExpression implements GeneralExpression {
     GeneralExpression first_expression, second_expression;
     int operation;
 
+    public ArithmeticExpression(String operator, GeneralExpression first_expression, GeneralExpression second_expression) {
+        switch (operator) {
+            case "+":
+                this.operation = 1;
+            case "-":
+                this.operation = 2;
+            case "*":
+                this.operation = 3;
+            case "/":
+                this.operation = 4;
+        }
+
+        this.first_expression = first_expression;
+        this.second_expression = second_expression;
+    }
+
     @Override
     public Value evaluate(DictionaryInterface<String, Value> table) throws GeneralException {
         Value first_value, second_value;
