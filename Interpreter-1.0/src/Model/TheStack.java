@@ -1,4 +1,6 @@
 package Model;
+import Exceptions.StackException;
+
 import java.util.Stack;
 
 public class TheStack<T> implements StackInterface<T> {
@@ -14,7 +16,9 @@ public class TheStack<T> implements StackInterface<T> {
     }
 
     @Override
-    public T pop() {
+    public T pop() throws StackException {
+        if (stack.size() == 0)
+            throw new StackException("Can't extract elements from an empty stack.");
         return stack.pop();
     }
 

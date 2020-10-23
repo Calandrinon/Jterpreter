@@ -1,5 +1,7 @@
 package Controller;
 import Exceptions.GeneralException;
+import Exceptions.ListException;
+import Exceptions.StackException;
 import Model.ProgramState;
 import Model.StackInterface;
 import Model.StatementInterface;
@@ -17,7 +19,7 @@ public class Controller {
         StackInterface<StatementInterface> stack = state.getExecutionStack();
 
         if (stack.isEmpty())
-            throw new GeneralException("Program state stack is empty.");
+            throw new StackException("Can't execute instruction: Program state stack is empty.");
 
         StatementInterface currentStatement = stack.pop();
         return currentStatement.execute(state);
@@ -39,7 +41,7 @@ public class Controller {
         this.repository.add(state);
     }
 
-    public ProgramState getCurrentProgramState() {
+    public ProgramState getCurrentProgramState() throws ListException {
         return repository.getCurrentProgramState();
     }
 }

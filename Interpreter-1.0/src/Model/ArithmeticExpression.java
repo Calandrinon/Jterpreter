@@ -1,5 +1,6 @@
 package Model;
 
+import Exceptions.ArithmeticException;
 import Exceptions.GeneralException;
 
 public class ArithmeticExpression implements GeneralExpression {
@@ -54,16 +55,16 @@ public class ArithmeticExpression implements GeneralExpression {
                     return new IntValue(n1*n2);
                 if (operation == 4) {
                     if (n2 == 0) {
-                        throw new GeneralException("Division by zero error.");
+                        throw new ArithmeticException("Division by zero error.");
                     } else {
                         return new IntValue(n1/n2);
                     }
                 }
             } else {
-                throw new GeneralException("The second operand is not an integer.");
+                throw new ArithmeticException("The second operand is not an integer.");
             }
         } else {
-            throw new GeneralException("The first operand is not an integer.");
+            throw new ArithmeticException("The first operand is not an integer.");
         }
 
         return null;

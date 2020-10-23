@@ -1,5 +1,6 @@
 package Model;
 import Exceptions.GeneralException;
+import Exceptions.UndefinedSymbolException;
 
 public class AssignmentStatement implements StatementInterface {
     private String id;
@@ -40,7 +41,7 @@ public class AssignmentStatement implements StatementInterface {
                 throw new GeneralException("The declared type of variable " + id + " and the type of the assigned expression do not match.");
             }
         } else {
-            throw new GeneralException("The variable " + id + " hasn't been declared.");
+            throw new UndefinedSymbolException("The variable " + id + " hasn't been declared.");
         }
 
         return state;

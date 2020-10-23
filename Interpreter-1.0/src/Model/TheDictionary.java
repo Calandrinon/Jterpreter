@@ -1,5 +1,7 @@
 package Model;
 
+import Exceptions.DictionaryException;
+
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
@@ -17,8 +19,11 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
     }
 
     @Override
-    public V lookup(K key) {
-        return (V)table.get(key);
+    public V lookup(K key) throws DictionaryException {
+        V value = (V)table.get(key);
+        if (value == null)
+            throw new DictionaryException("The key does not exist in the table.");
+        return value;
     }
 
     @Override

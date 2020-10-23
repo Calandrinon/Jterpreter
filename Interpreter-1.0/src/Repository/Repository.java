@@ -1,5 +1,6 @@
 package Repository;
 
+import Exceptions.ListException;
 import Model.ProgramState;
 import Model.TheList;
 
@@ -16,7 +17,7 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public ProgramState getCurrentProgramState() {
+    public ProgramState getCurrentProgramState() throws ListException {
         ProgramState state = container.get(0);
         container.remove(0);
         return state;

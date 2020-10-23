@@ -1,4 +1,6 @@
 package Model;
+import Exceptions.ListException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,9 @@ public class TheList<T> implements ListInterface<T> {
     }
 
     @Override
-    public T get(int index) {
+    public T get(int index) throws ListException {
+        if (index >= list.size())
+            throw new ListException("Index is greater than or equal to the size of the list.");
         return list.get(index);
     }
 
