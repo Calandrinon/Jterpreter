@@ -5,17 +5,26 @@ import Exceptions.GeneralException;
 public class ArithmeticExpression implements GeneralExpression {
     GeneralExpression first_expression, second_expression;
     int operation;
+    String operator;
 
     public ArithmeticExpression(String operator, GeneralExpression first_expression, GeneralExpression second_expression) {
         switch (operator) {
             case "+":
                 this.operation = 1;
+                this.operator = "+";
+                break;
             case "-":
                 this.operation = 2;
+                this.operator = "-";
+                break;
             case "*":
                 this.operation = 3;
+                this.operator = "*";
+                break;
             case "/":
                 this.operation = 4;
+                this.operator = "/";
+                break;
         }
 
         this.first_expression = first_expression;
@@ -58,5 +67,9 @@ public class ArithmeticExpression implements GeneralExpression {
         }
 
         return null;
+    }
+
+    public String toString() {
+        return first_expression.toString() + operator + second_expression.toString();
     }
 }
