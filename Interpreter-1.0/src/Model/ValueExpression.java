@@ -13,4 +13,8 @@ public class ValueExpression implements GeneralExpression {
     public Value evaluate(DictionaryInterface<String, Value> table) throws GeneralException {
         return value;
     }
+
+    public String toString() {
+        return value.toString();
+    }
 }

@@ -11,6 +11,11 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public void add(ProgramState state) {
+        container.add(state);
+    }
+
+    @Override
     public ProgramState getCurrentProgramState() {
         ProgramState state = container.get(0);
         container.remove(0);

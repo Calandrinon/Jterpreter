@@ -1,10 +1,5 @@
 package Model;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 public class ProgramState {
     private StackInterface<StatementInterface> executionStack;
     private DictionaryInterface<String, Value> symbolTable;
@@ -16,23 +11,8 @@ public class ProgramState {
         this.executionStack = executionStack;
         this.symbolTable = symbolTable;
         this.out = out;
-        this.originalProgram = (StatementInterface) this.deepCopy(originalProgram);
+        this.originalProgram = (StatementInterface) originalProgram.clone();
         executionStack.push(originalProgram);
-    }
-
-    private Object deepCopy(Object object) {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream);
-            outputStream.writeObject(object);
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            return objectInputStream.readObject();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public StackInterface<StatementInterface> getExecutionStack() {
@@ -43,6 +23,10 @@ public class ProgramState {
         return symbolTable;
     }
 
+    public ListInterface<Value> getOutput() {
+        return out;
+    }
+
     public void setExecutionStack(StackInterface<StatementInterface> executionStack) {
         this.executionStack = executionStack;
     }
@@ -51,7 +35,18 @@ public class ProgramState {
         this.symbolTable = symbolTable;
     }
 
-    public String toString() {
-        return "";   /// To be implemented...
+    public void setOutput(ListInterface<Value> out) {
+        this.out = out;
     }
+
+    public String toString() {
+        String text = "Execution\n----------------------------------------------------------------------\n";
+        String executionStackString = executionStack.toString();
+        String symbolTableString = symbolTable.toString();
+        String outString = out.toString();
+
+        text += "Stack: [" + executionStackString + "]\nsymbolTable: {" + symbolTableString + "}\nOutput: " + outString + "\n\n";
+        return text;
+    }
+
 }

@@ -22,4 +22,19 @@ public class TheStack<T> implements StackInterface<T> {
     public boolean isEmpty() {
         return stack.isEmpty();
     }
+
+    public String toString() {
+        String text = "";
+        Stack<T> stackClone = (Stack<T>)stack.clone();
+
+        int index = 0;
+        while (!stackClone.empty()) {
+            if (index > 0)
+                text += ", ";
+            text += stackClone.pop().toString();
+            index++;
+        }
+
+        return text;
+    }
 }

@@ -13,4 +13,8 @@ public class VariableExpression implements GeneralExpression {
     public Value evaluate(DictionaryInterface<String, Value> table) throws GeneralException {
         return table.lookup(id);
     }
+
+    public String toString() {
+        return "id="+id;
+    }
 }

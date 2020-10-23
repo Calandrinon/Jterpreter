@@ -3,6 +3,7 @@ import Exceptions.GeneralException;
 import Model.ProgramState;
 import Model.StackInterface;
 import Model.StatementInterface;
+import Model.TheStack;
 import Repository.RepositoryInterface;
 
 public class Controller {
@@ -32,5 +33,13 @@ public class Controller {
 
             System.out.println(state.toString());
         }
+    }
+
+    public void addProgramState(ProgramState state) {
+        this.repository.add(state);
+    }
+
+    public ProgramState getCurrentProgramState() {
+        return repository.getCurrentProgramState();
     }
 }

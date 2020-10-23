@@ -2,16 +2,28 @@ package Model;
 import Exceptions.GeneralException;
 
 public class AssignmentStatement implements StatementInterface {
-    String id;
-    GeneralExpression expression;
+    private String id;
+    private GeneralExpression expression;
 
     public AssignmentStatement(String id, GeneralExpression expression) {
         this.id = id;
         this.expression = expression;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public GeneralExpression getExpression() {
+        return expression;
+    }
+
     public String toString() {
         return id + "=" + expression.toString();
+    }
+
+    public AssignmentStatement clone() {
+        return new AssignmentStatement(this.id, this.expression);
     }
 
     @Override

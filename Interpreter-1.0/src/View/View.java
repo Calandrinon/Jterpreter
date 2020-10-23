@@ -1,8 +1,7 @@
 package View;
 import Controller.Controller;
+import Exceptions.GeneralException;
 import Model.*;
-
-import javax.swing.plaf.nimbus.State;
 import java.util.Scanner;
 
 public class View {
@@ -25,16 +24,28 @@ public class View {
         System.out.println("3. Run the third example.");
     }
 
-    public void firstExampleExecution() {
+    public void firstExampleExecution() throws GeneralException {
+        StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        ListInterface<Value> output = new TheList<Value>();
+
         StatementInterface example = new CompoundStatement(
                 new VariableDeclarationStatement("v", new IntType()),
                 new CompoundStatement(
                         new AssignmentStatement("v", new ValueExpression(new IntValue(2))),
                         new PrintStatement(new VariableExpression("v")))
         );
+
+        ProgramState first_program = new ProgramState(executionStack, symbolTable, output, example);
+        this.controller.addProgramState(first_program);
+        this.controller.completeExecution();
     }
 
-    public void secondExampleExecution() {
+    public void secondExampleExecution() throws GeneralException {
+        StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        ListInterface<Value> output = new TheList<Value>();
+
         StatementInterface example = new CompoundStatement(
                 new VariableDeclarationStatement("a", new IntType()),
                 new CompoundStatement(
@@ -46,13 +57,18 @@ public class View {
                                                 new ArithmeticExpression("+", new VariableExpression("a"), new ValueExpression(new IntValue(1)))))
                         )
         );
+
+
+        ProgramState second_program = new ProgramState(executionStack, symbolTable, output, example);
+        this.controller.addProgramState(second_program);
+        this.controller.completeExecution();
     }
 
     public void thirdExampleExecution() {
 
     }
 
-    public void executeProgram() {
+    public void executeProgram() throws GeneralException {
         Scanner scanner = new Scanner(System.in);
         this.printProgramMenu();
         System.out.print("Enter the option number: ");
@@ -72,7 +88,7 @@ public class View {
         }
     }
 
-    public void run() {
+    public void run() throws GeneralException {
         Scanner scanner = new Scanner(System.in);
 
         while (this.running) {

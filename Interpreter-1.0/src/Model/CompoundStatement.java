@@ -10,6 +10,10 @@ public class CompoundStatement implements StatementInterface {
         this.second = second;
     }
 
+    public CompoundStatement clone() {
+        return new CompoundStatement(this.first, this.second);
+    }
+
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException {
         StackInterface<StatementInterface> stack = state.getExecutionStack();
@@ -20,6 +24,6 @@ public class CompoundStatement implements StatementInterface {
     }
 
     public String toString() {
-        return "(" + first.toString() + ";" + second.toString() + ")";
+        return "(" + first.toString() + " | " + second.toString() + ")";
     }
 }

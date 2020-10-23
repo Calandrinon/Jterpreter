@@ -33,4 +33,16 @@ public class TheList<T> implements ListInterface<T> {
     public void set(int index, T element) {
         list.set(index, element);
     }
+
+    public String toString() {
+        String text = "";
+
+        for (int i = 0; i < list.size(); i++) {
+            if (i > 0)
+                text += ", ";
+            text += list.get(i);
+        }
+
+        return text;
+    }
 }

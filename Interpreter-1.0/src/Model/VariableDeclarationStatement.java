@@ -11,8 +11,19 @@ public class VariableDeclarationStatement implements StatementInterface {
         this.type = type;
     }
 
+    public VariableDeclarationStatement clone() {
+        return new VariableDeclarationStatement(this.name, this.type);
+    }
+
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException {
-        return null;
+        DictionaryInterface<String, Value> table = state.getSymbolTable();
+        table.put(name, new UnknownValue(this.type));
+        state.setSymbolTable(table);
+        return state;
+    }
+
+    public String toString() {
+        return "varDec(" + name + "=" + type.toString() + ")";
     }
 }
