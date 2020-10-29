@@ -2,7 +2,7 @@ package Model;
 
 import Exceptions.GeneralException;
 
-public class VariableExpression implements GeneralExpression {
+public class VariableExpression extends GeneralExpression {
     private String id;
 
     public VariableExpression(String id) {

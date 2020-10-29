@@ -2,7 +2,7 @@ package Model;
 
 import Exceptions.GeneralException;
 
-public class ValueExpression implements GeneralExpression {
+public class ValueExpression extends GeneralExpression {
     private Value value;
 
     public ValueExpression(Value value) {

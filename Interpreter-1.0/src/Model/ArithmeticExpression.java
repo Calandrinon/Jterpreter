@@ -3,7 +3,7 @@ package Model;
 import Exceptions.ArithmeticException;
 import Exceptions.GeneralException;
 
-public class ArithmeticExpression implements GeneralExpression {
+public class ArithmeticExpression extends GeneralExpression {
     GeneralExpression first_expression, second_expression;
     int operation;
     String operator;

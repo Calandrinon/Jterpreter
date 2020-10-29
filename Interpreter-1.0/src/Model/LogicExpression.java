@@ -2,7 +2,7 @@ package Model;
 
 import Exceptions.GeneralException;
 
-public class LogicExpression implements GeneralExpression {
+public class LogicExpression extends GeneralExpression {
     private GeneralExpression first_expression, second_expression;
     private int operation;
 

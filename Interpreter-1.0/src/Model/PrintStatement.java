@@ -3,7 +3,7 @@ package Model;
 import Exceptions.GeneralException;
 
 public class PrintStatement implements StatementInterface {
-    GeneralExpression expression;
+    private GeneralExpression expression;
 
     public PrintStatement(GeneralExpression expression) {
         this.expression = expression;
