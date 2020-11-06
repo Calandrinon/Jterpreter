@@ -19,4 +19,9 @@ public class BoolValue implements Value {
     public String toString() {
         return String.valueOf(value);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof BoolValue && this.value == ((BoolValue) other).getValue();
+    }
 }

@@ -19,4 +19,9 @@ public class IntValue implements Value {
     public String toString() {
         return String.valueOf(value);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof IntValue && this.value == ((IntValue) other).getValue();
+    }
 }
