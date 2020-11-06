@@ -1,6 +1,10 @@
-package Model;
+package Model.Statement;
 
 import Exceptions.GeneralException;
+import Model.Expression.GeneralExpression;
+import Model.ADT.ListInterface;
+import Model.ProgramState;
+import Model.Value.Value;
 
 public class PrintStatement implements StatementInterface {
     private GeneralExpression expression;

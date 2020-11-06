@@ -1,5 +1,6 @@
-package Model;
+package Model.ADT;
 import Exceptions.StackException;
+import Model.ADT.StackInterface;
 
 import java.util.Stack;
 

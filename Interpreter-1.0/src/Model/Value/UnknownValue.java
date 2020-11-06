@@ -1,4 +1,7 @@
-package Model;
+package Model.Value;
+
+import Model.Type.Type;
+import Model.Value.Value;
 
 public class UnknownValue implements Value {
     private final Type type;

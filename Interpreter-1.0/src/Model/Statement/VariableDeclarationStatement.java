@@ -1,6 +1,11 @@
-package Model;
+package Model.Statement;
 
 import Exceptions.GeneralException;
+import Model.ADT.DictionaryInterface;
+import Model.ProgramState;
+import Model.Type.Type;
+import Model.Value.UnknownValue;
+import Model.Value.Value;
 
 public class VariableDeclarationStatement implements StatementInterface {
     String name;

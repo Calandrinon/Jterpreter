@@ -1,4 +1,7 @@
-package Model;
+package Model.Value;
+
+import Model.Type.Type;
+import Model.Type.BoolType;
 
 public class BoolValue implements Value {
     boolean value;

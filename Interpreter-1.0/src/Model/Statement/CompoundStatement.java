@@ -1,6 +1,8 @@
-package Model;
+package Model.Statement;
 
 import Exceptions.GeneralException;
+import Model.ProgramState;
+import Model.ADT.StackInterface;
 
 public class CompoundStatement implements StatementInterface {
     StatementInterface first, second;

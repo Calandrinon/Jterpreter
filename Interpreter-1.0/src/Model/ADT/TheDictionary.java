@@ -1,6 +1,7 @@
-package Model;
+package Model.ADT;
 
 import Exceptions.DictionaryException;
+import Model.ADT.DictionaryInterface;
 
 import java.util.Hashtable;
 import java.util.Iterator;

@@ -1,6 +1,12 @@
-package Model;
+package Model.Statement;
 import Exceptions.GeneralException;
 import Exceptions.UndefinedSymbolException;
+import Model.*;
+import Model.ADT.DictionaryInterface;
+import Model.ADT.StackInterface;
+import Model.Expression.GeneralExpression;
+import Model.Type.Type;
+import Model.Value.Value;
 
 public class AssignmentStatement implements StatementInterface {
     private String id;

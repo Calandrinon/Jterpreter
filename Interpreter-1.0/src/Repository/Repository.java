@@ -2,7 +2,7 @@ package Repository;
 
 import Exceptions.ListException;
 import Model.ProgramState;
-import Model.TheList;
+import Model.ADT.TheList;
 
 public class Repository implements RepositoryInterface {
     private TheList<ProgramState> container;

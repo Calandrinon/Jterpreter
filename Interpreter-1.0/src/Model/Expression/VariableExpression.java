@@ -1,6 +1,8 @@
-package Model;
+package Model.Expression;
 
 import Exceptions.GeneralException;
+import Model.ADT.DictionaryInterface;
+import Model.Value.Value;
 
 public class VariableExpression extends GeneralExpression {
     private String id;

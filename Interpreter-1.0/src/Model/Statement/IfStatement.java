@@ -1,6 +1,12 @@
-package Model;
+package Model.Statement;
 
 import Exceptions.GeneralException;
+import Model.*;
+import Model.ADT.StackInterface;
+import Model.Expression.GeneralExpression;
+import Model.Type.BoolType;
+import Model.Value.BoolValue;
+import Model.Value.Value;
 
 public class IfStatement implements StatementInterface {
     private GeneralExpression expression;

@@ -1,5 +1,11 @@
 package Model;
 
+import Model.ADT.DictionaryInterface;
+import Model.ADT.ListInterface;
+import Model.ADT.StackInterface;
+import Model.Statement.StatementInterface;
+import Model.Value.Value;
+
 public class ProgramState {
     private StackInterface<StatementInterface> executionStack;
     private DictionaryInterface<String, Value> symbolTable;

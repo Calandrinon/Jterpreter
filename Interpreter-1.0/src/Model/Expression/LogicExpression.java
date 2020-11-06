@@ -1,7 +1,11 @@
-package Model;
+package Model.Expression;
 
 import Exceptions.GeneralException;
 import Exceptions.LogicException;
+import Model.Value.BoolValue;
+import Model.ADT.DictionaryInterface;
+import Model.Value.IntValue;
+import Model.Value.Value;
 
 public class LogicExpression extends GeneralExpression {
     private GeneralExpression first_expression, second_expression;

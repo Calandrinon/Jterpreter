@@ -1,5 +1,6 @@
-package Model;
+package Model.ADT;
 import Exceptions.ListException;
+import Model.ADT.ListInterface;
 
 import java.util.ArrayList;
 import java.util.List;

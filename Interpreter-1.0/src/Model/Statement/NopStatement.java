@@ -1,7 +1,6 @@
-package Model;
+package Model.Statement;
 import Exceptions.GeneralException;
-
-import javax.swing.plaf.nimbus.State;
+import Model.ProgramState;
 
 public class NopStatement implements StatementInterface {
     private ProgramState state;

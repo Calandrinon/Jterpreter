@@ -3,9 +3,8 @@ import Exceptions.GeneralException;
 import Exceptions.ListException;
 import Exceptions.StackException;
 import Model.ProgramState;
-import Model.StackInterface;
-import Model.StatementInterface;
-import Model.TheStack;
+import Model.ADT.StackInterface;
+import Model.Statement.StatementInterface;
 import Repository.RepositoryInterface;
 
 public class Controller {

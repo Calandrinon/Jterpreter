@@ -2,6 +2,18 @@ package View;
 import Controller.Controller;
 import Exceptions.GeneralException;
 import Model.*;
+import Model.ADT.*;
+import Model.Expression.ArithmeticExpression;
+import Model.Expression.LogicExpression;
+import Model.Expression.ValueExpression;
+import Model.Expression.VariableExpression;
+import Model.Statement.*;
+import Model.Type.BoolType;
+import Model.Type.IntType;
+import Model.Value.BoolValue;
+import Model.Value.IntValue;
+import Model.Value.Value;
+
 import java.util.Scanner;
 
 public class View {

@@ -1,7 +1,11 @@
-package Model;
+package Model.Expression;
 
 import Exceptions.ArithmeticException;
 import Exceptions.GeneralException;
+import Model.ADT.DictionaryInterface;
+import Model.Type.IntType;
+import Model.Value.IntValue;
+import Model.Value.Value;
 
 public class ArithmeticExpression extends GeneralExpression {
     GeneralExpression first_expression, second_expression;

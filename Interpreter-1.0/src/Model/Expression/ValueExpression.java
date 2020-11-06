@@ -1,6 +1,8 @@
-package Model;
+package Model.Expression;
 
 import Exceptions.GeneralException;
+import Model.ADT.DictionaryInterface;
+import Model.Value.Value;
 
 public class ValueExpression extends GeneralExpression {
     private Value value;
