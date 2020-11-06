@@ -19,9 +19,10 @@ public class View {
     }
 
     public void printProgramMenu() {
-        System.out.println("1. Run the first example.");
-        System.out.println("2. Run the second example.");
-        System.out.println("3. Run the third example.");
+        System.out.println("1.  int v; v=2;Print(v);");
+        System.out.println("2.  int a;int b; a=2+3*5;b=a+1;Print(b);");
+        System.out.println("3.  bool a; int v; a=true;(If a Then v=2 Else v=3);Print(v);");
+        System.out.println("4.  int a, b; bool c; a = 2, b = 3; c = true; (If (a + b == 5 && c) Then Print(1) Else Print(0))");
     }
 
     public void firstExampleExecution() throws GeneralException {
@@ -95,6 +96,43 @@ public class View {
         this.controller.completeExecution();
     }
 
+    public void fourthExampleExecution() throws GeneralException {
+        /**
+         int a, b; bool c; a = 2, b = 3; c = true; (If (a + b == 5 && c) Then Print(1) Else Print(0))
+         **/
+        StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        ListInterface<Value> output = new TheList<Value>();
+
+        StatementInterface example = new CompoundStatement(
+            new VariableDeclarationStatement("a", new IntType()),
+            new CompoundStatement(
+                new VariableDeclarationStatement("b", new IntType()),
+                new CompoundStatement(
+                    new VariableDeclarationStatement("c", new BoolType()),
+                    new CompoundStatement(
+                        new AssignmentStatement("a", new ValueExpression(new IntValue(2))),
+                        new CompoundStatement(
+                            new AssignmentStatement("b", new ValueExpression(new IntValue(3))),
+                            new CompoundStatement(
+                                new AssignmentStatement("c", new ValueExpression(new BoolValue(true))),
+                                new IfStatement(
+                                        new LogicExpression(new LogicExpression(new ArithmeticExpression("+", new VariableExpression("a"), new VariableExpression("b")), "==", new ValueExpression(new IntValue(5))), "&&", new VariableExpression("c")),
+                                        new PrintStatement(new ValueExpression(new IntValue(1))),
+                                        new PrintStatement(new ValueExpression(new IntValue(0)))
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        ProgramState third_program = new ProgramState(executionStack, symbolTable, output, example);
+        this.controller.addProgramState(third_program);
+        this.controller.completeExecution();
+    }
+
     public void executeProgram() throws GeneralException {
         Scanner scanner = new Scanner(System.in);
         this.printProgramMenu();
@@ -102,18 +140,12 @@ public class View {
         String option_as_string = scanner.next();
         int option = Integer.parseInt(option_as_string);
 
-        switch(option) {
-            case 1:
-                this.firstExampleExecution();
-                break;
-            case 2:
-                this.secondExampleExecution();
-                break;
-            case 3:
-                this.thirdExampleExecution();
-                break;
-            default:
-                this.firstExampleExecution();
+        switch (option) {
+            case 1 -> this.firstExampleExecution();
+            case 2 -> this.secondExampleExecution();
+            case 3 -> this.thirdExampleExecution();
+            case 4 -> this.fourthExampleExecution();
+            default -> System.out.println("Enter an option between 1 and 4.");
         }
     }
 
@@ -127,12 +159,8 @@ public class View {
             int option = Integer.parseInt(input);
 
             switch (option) {
-                case 0:
-                    this.running = false;
-                    break;
-                case 1:
-                    this.executeProgram();
-                    break;
+                case 0 -> this.running = false;
+                case 1 -> this.executeProgram();
             }
         }
 

@@ -55,7 +55,6 @@ public class LogicExpression extends GeneralExpression {
     public Value evaluate(DictionaryInterface<String, Value> table) throws GeneralException {
         Value first_expression_result = first_expression.evaluate(table);
         Value second_expression_result = second_expression.evaluate(table);
-        this.checkTypeEquality(table);
 
         switch (operation) {
             case "&&":
