@@ -1,8 +1,6 @@
 package Model;
 
-import Model.ADT.DictionaryInterface;
-import Model.ADT.ListInterface;
-import Model.ADT.StackInterface;
+import Model.ADT.*;
 import Model.Statement.StatementInterface;
 import Model.Value.Value;
 
@@ -24,6 +22,15 @@ public class ProgramState {
         this.out = out;
         this.originalProgram = (StatementInterface) originalProgram.clone();
         executionStack.push(originalProgram);
+    }
+
+    public static ProgramState createNewProgramState(StatementInterface statement) {
+        StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output = new TheList<Value>();
+
+        return new ProgramState(executionStack, symbolTable, fileTable, output, statement);
     }
 
     public StackInterface<StatementInterface> getExecutionStack() {
