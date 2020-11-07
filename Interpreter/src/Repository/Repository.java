@@ -23,6 +23,9 @@ public class Repository implements RepositoryInterface {
     public void add(ProgramState state) {
         container.add(state);
     }
+    public void addNewFile(String logFilePath) {
+        this.logFilePath = logFilePath;
+    }
     public void pushFront(ProgramState state) {container.pushFront(state);}
     public void clear() {
         container.clear();

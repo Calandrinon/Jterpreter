@@ -14,6 +14,7 @@ import Model.Value.BoolValue;
 import Model.Value.IntValue;
 import Model.Value.Value;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -45,6 +46,7 @@ public class View {
 
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
 
         StatementInterface example = new CompoundStatement(
@@ -54,7 +56,7 @@ public class View {
                         new PrintStatement(new VariableExpression("v")))
         );
 
-        ProgramState first_program = new ProgramState(executionStack, symbolTable, output, example);
+        ProgramState first_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
         this.controller.addProgramState(first_program);
         this.controller.completeExecution();
     }
@@ -66,6 +68,7 @@ public class View {
 
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
 
         StatementInterface example = new CompoundStatement(
@@ -85,7 +88,7 @@ public class View {
         );
 
 
-        ProgramState second_program = new ProgramState(executionStack, symbolTable, output, example);
+        ProgramState second_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
         this.controller.addProgramState(second_program);
         this.controller.completeExecution();
     }
@@ -96,6 +99,7 @@ public class View {
          **/
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
 
         StatementInterface example = new CompoundStatement(new VariableDeclarationStatement("a",new BoolType()),
@@ -104,7 +108,7 @@ public class View {
                                 IntValue(2))), new AssignmentStatement("v", new ValueExpression(new IntValue(3)))), new PrintStatement(new
                                 VariableExpression("v"))))));
 
-        ProgramState third_program = new ProgramState(executionStack, symbolTable, output, example);
+        ProgramState third_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
         this.controller.addProgramState(third_program);
         this.controller.completeExecution();
     }
@@ -115,6 +119,7 @@ public class View {
          **/
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
 
         StatementInterface example = new CompoundStatement(
@@ -141,7 +146,7 @@ public class View {
             )
         );
 
-        ProgramState third_program = new ProgramState(executionStack, symbolTable, output, example);
+        ProgramState third_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
         this.controller.addProgramState(third_program);
         this.controller.completeExecution();
     }
