@@ -34,6 +34,10 @@ public class ProgramState {
         return symbolTable;
     }
 
+    public DictionaryInterface<String, BufferedReader> getFileTable() {
+        return fileTable;
+    }
+
     public ListInterface<Value> getOutput() {
         return out;
     }
@@ -44,6 +48,10 @@ public class ProgramState {
 
     public void setSymbolTable(DictionaryInterface<String, Value> symbolTable) {
         this.symbolTable = symbolTable;
+    }
+
+    public void setFileTable(DictionaryInterface<String, BufferedReader> fileTable) {
+        this.fileTable = fileTable;
     }
 
     public void setOutput(ListInterface<Value> out) {

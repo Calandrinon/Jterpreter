@@ -7,6 +7,7 @@ import Model.ADT.StackInterface;
 import Model.Statement.StatementInterface;
 import Repository.RepositoryInterface;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Controller {
@@ -16,7 +17,7 @@ public class Controller {
         this.repository = repository;
     }
 
-    public ProgramState oneStepExecution(ProgramState state) throws GeneralException {
+    public ProgramState oneStepExecution(ProgramState state) throws GeneralException, FileNotFoundException {
         StackInterface<StatementInterface> stack = state.getExecutionStack();
 
         if (stack.isEmpty())
