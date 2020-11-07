@@ -17,7 +17,7 @@ public class Controller {
         this.repository = repository;
     }
 
-    public ProgramState oneStepExecution(ProgramState state) throws GeneralException, FileNotFoundException {
+    public ProgramState oneStepExecution(ProgramState state) throws GeneralException, IOException {
         StackInterface<StatementInterface> stack = state.getExecutionStack();
 
         if (stack.isEmpty())

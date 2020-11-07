@@ -28,6 +28,11 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
     }
 
     @Override
+    public void remove(K key) {
+        table.remove(key);
+    }
+
+    @Override
     public boolean isDefined(String id) {
         return table.containsKey(id);
     }
