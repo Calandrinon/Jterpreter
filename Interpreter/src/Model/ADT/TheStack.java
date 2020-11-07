@@ -32,12 +32,9 @@ public class TheStack<T> implements StackInterface<T> {
         String text = "";
         Stack<T> stackClone = (Stack<T>)stack.clone();
 
-        int index = 0;
         while (!stackClone.empty()) {
-            if (index > 0)
-                text += ", ";
             text += stackClone.pop().toString();
-            index++;
+            text += "\n";
         }
 
         return text;

@@ -14,6 +14,7 @@ import Model.Value.BoolValue;
 import Model.Value.IntValue;
 import Model.Value.Value;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class View {
@@ -37,7 +38,7 @@ public class View {
         System.out.println("4.  int a, b; bool c; a = 2, b = 3; c = true; (If (a + b == 5 && c) Then Print(1) Else Print(0))");
     }
 
-    public void firstExampleExecution() throws GeneralException {
+    public void firstExampleExecution() throws GeneralException, IOException {
         /**
          * int v; v=2;Print(v);
          * **/
@@ -58,7 +59,7 @@ public class View {
         this.controller.completeExecution();
     }
 
-    public void secondExampleExecution() throws GeneralException {
+    public void secondExampleExecution() throws GeneralException, IOException {
         /**
          * int a;int b; a=2+3*5;b=a+1;Print(b);
          * **/
@@ -89,7 +90,7 @@ public class View {
         this.controller.completeExecution();
     }
 
-    public void thirdExampleExecution() throws GeneralException {
+    public void thirdExampleExecution() throws GeneralException, IOException {
         /**
         bool a; int v; a=true;(If a Then v=2 Else v=3);Print(v)
          **/
@@ -108,7 +109,7 @@ public class View {
         this.controller.completeExecution();
     }
 
-    public void fourthExampleExecution() throws GeneralException {
+    public void fourthExampleExecution() throws GeneralException, IOException {
         /**
          int a, b; bool c; a = 2, b = 3; c = true; (If (a + b == 5 && c) Then Print(1) Else Print(0))
          **/
@@ -145,7 +146,7 @@ public class View {
         this.controller.completeExecution();
     }
 
-    public void executeProgram() throws GeneralException {
+    public void executeProgram() throws GeneralException, IOException {
         Scanner scanner = new Scanner(System.in);
         this.printProgramMenu();
         System.out.print("Enter the option number: ");
@@ -161,7 +162,7 @@ public class View {
         }
     }
 
-    public void run() throws GeneralException {
+    public void run() throws GeneralException, IOException {
         Scanner scanner = new Scanner(System.in);
 
         while (this.running) {

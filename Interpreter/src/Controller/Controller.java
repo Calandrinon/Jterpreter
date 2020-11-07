@@ -7,6 +7,8 @@ import Model.ADT.StackInterface;
 import Model.Statement.StatementInterface;
 import Repository.RepositoryInterface;
 
+import java.io.IOException;
+
 public class Controller {
     private RepositoryInterface repository;
 
@@ -24,16 +26,20 @@ public class Controller {
         return currentStatement.execute(state);
     }
 
-    public void completeExecution() throws GeneralException {
+    public void completeExecution() throws GeneralException, IOException {
         ProgramState state = repository.getCurrentProgramState();
         StackInterface<StatementInterface> stack = state.getExecutionStack();
 
+        this.repository.logProgramState();
         while (!stack.isEmpty()) {
-            this.oneStepExecution(state);
+            state = this.oneStepExecution(state);
+            this.repository.pushFront(state);
             stack = state.getExecutionStack();
-
+            this.repository.logProgramState();
             System.out.println(state.toString());
         }
+
+        this.repository.clear();
     }
 
     public void addProgramState(ProgramState state) {

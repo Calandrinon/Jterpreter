@@ -46,12 +46,12 @@ public class ProgramState {
     }
 
     public String toString() {
-        String text = "Execution\n----------------------------------------------------------------------\n";
+        String text = "----------------------------------------------------------------------\n";
         String executionStackString = executionStack.toString();
         String symbolTableString = symbolTable.toString();
         String outString = out.toString();
 
-        text += "Stack: [" + executionStackString + "]\nsymbolTable: {" + symbolTableString + "}\nOutput: " + outString + "\n\n";
+        text += "Execution stack: \n" + executionStackString + "\nSymbol table:\n" + symbolTableString + "\nOutput:\n" + outString + "\n\n";
         return text;
     }
 

@@ -50,4 +50,12 @@ public class TheList<T> implements ListInterface<T> {
 
         return text;
     }
+
+    public int size() {
+        return list.size();
+    }
+
+    public void pushFront(T state) {
+        list.add(0, state);
+    }
 }

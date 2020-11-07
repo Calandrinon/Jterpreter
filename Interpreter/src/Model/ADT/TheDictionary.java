@@ -34,18 +34,11 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
 
     public String toString() {
         StringBuilder text = new StringBuilder();
-
         Set<String> keys = (Set<String>) table.keySet();
-        Iterator<String> itr = keys.iterator();
 
-        int nameIndex = 0;
-        while (itr.hasNext()) {
-            if (nameIndex > 0) {
-                text.append(", ");
-            }
-            String str = itr.next();
-            text.append(str).append("=").append(table.get(str));
-            nameIndex++;
+        for (String str : keys) {
+            text.append(str).append(" --> ").append(table.get(str));
+            text.append("\n");
         }
 
         return text.toString();
