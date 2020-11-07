@@ -16,6 +16,10 @@ public class VariableExpression extends GeneralExpression {
         return table.lookup(id);
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String toString() {
         return "@"+id;
     }

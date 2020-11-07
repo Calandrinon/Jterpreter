@@ -10,12 +10,13 @@ import Model.Expression.VariableExpression;
 import Model.Statement.*;
 import Model.Type.BoolType;
 import Model.Type.IntType;
+import Model.Type.StringType;
 import Model.Value.BoolValue;
 import Model.Value.IntValue;
+import Model.Value.StringValue;
 import Model.Value.Value;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class View {
@@ -37,6 +38,7 @@ public class View {
         System.out.println("2.  int a;int b; a=2+3*5;b=a+1;Print(b);");
         System.out.println("3.  bool a; int v; a=true;(If a Then v=2 Else v=3);Print(v);");
         System.out.println("4.  int a, b; bool c; a = 2, b = 3; c = true; (If (a + b == 5 && c) Then Print(1) Else Print(0))");
+        System.out.println("5.  string varf; varf=\"test.in\"; openRFile(varf); int varc; readFile(varf,varc);print(varc); readFile(varf,varc);print(varc);closeRFile(varf);");
     }
 
     public void firstExampleExecution() throws GeneralException, IOException {
@@ -146,8 +148,50 @@ public class View {
             )
         );
 
-        ProgramState third_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
-        this.controller.addProgramState(third_program);
+        ProgramState fourth_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
+        this.controller.addProgramState(fourth_program);
+        this.controller.completeExecution();
+    }
+
+    public void fifthExampleExecution() throws GeneralException, IOException {
+        StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output = new TheList<Value>();
+
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("test.in", true)));
+        writer.println("15");
+        writer.println("50");
+        writer.close();
+
+        StatementInterface example = new CompoundStatement(
+            new VariableDeclarationStatement("varf", new StringType()),
+            new CompoundStatement(
+                new AssignmentStatement("varf", new ValueExpression(new StringValue("test.in"))),
+                new CompoundStatement(
+                    new OpenFileStatement(new VariableExpression("varf")),
+                    new CompoundStatement(
+                        new VariableDeclarationStatement("varc", new IntType()),
+                        new CompoundStatement(
+                            new ReadFileStatement(new VariableExpression("varf"), new VariableExpression("varc")),
+                            new CompoundStatement(
+                                new PrintStatement(new VariableExpression("varc")),
+                                new CompoundStatement(
+                                    new ReadFileStatement(new VariableExpression("varf"), new VariableExpression("varc")),
+                                    new CompoundStatement(
+                                        new PrintStatement(new VariableExpression("varc")),
+                                        new CloseFileStatement(new VariableExpression("varf"))
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        ProgramState fifth_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
+        this.controller.addProgramState(fifth_program);
         this.controller.completeExecution();
     }
 
@@ -163,7 +207,8 @@ public class View {
             case 2 -> this.secondExampleExecution();
             case 3 -> this.thirdExampleExecution();
             case 4 -> this.fourthExampleExecution();
-            default -> System.out.println("Enter an option between 1 and 4.");
+            case 5 -> this.fifthExampleExecution();
+            default -> System.out.println("Enter an option between 1 and 5.");
         }
     }
 

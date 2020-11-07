@@ -65,7 +65,7 @@ public class ProgramState {
         String outString = out.toString();
         String fileTableString = fileTable.toString();
 
-        text += "Execution stack: \n" + executionStackString + "\nSymbol table:\n" + symbolTableString + "\nOutput:\n" + outString + "\n\n";
+        text += "Execution stack: \n" + executionStackString + "\nSymbol table:\n" + symbolTableString + "\nOutput:\n" + outString + "\nFile table:\n" + fileTableString + "\n\n";
         return text;
     }
 

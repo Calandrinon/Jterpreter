@@ -51,4 +51,8 @@ public class OpenFileStatement implements StatementInterface {
     public OpenFileStatement clone() {
         return new OpenFileStatement(this.expression);
     }
+
+    public String toString() {
+        return "OpenFile(" + this.expression.toString() + ")";
+    }
 }

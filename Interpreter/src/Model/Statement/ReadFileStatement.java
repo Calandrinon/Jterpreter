@@ -5,6 +5,7 @@ import Exceptions.GeneralException;
 import Exceptions.UndefinedSymbolException;
 import Model.ADT.DictionaryInterface;
 import Model.Expression.GeneralExpression;
+import Model.Expression.VariableExpression;
 import Model.ProgramState;
 import Model.Type.IntType;
 import Model.Type.StringType;
@@ -17,12 +18,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ReadFileStatement implements StatementInterface {
-    private GeneralExpression expression;
-    private String variableName;
+    private GeneralExpression expression, resultContainerVariable;
 
-    public ReadFileStatement(GeneralExpression expression, String variableName) {
+    public ReadFileStatement(GeneralExpression expression, GeneralExpression resultContainerVariable) {
         this.expression = expression;
-        this.variableName = variableName;
+        this.resultContainerVariable = resultContainerVariable;
     }
 
     @Override
@@ -30,9 +30,11 @@ public class ReadFileStatement implements StatementInterface {
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();
         DictionaryInterface<String, BufferedReader> fileTable = state.getFileTable();
         Value value = expression.evaluate(symbolTable);
+        Value variable = resultContainerVariable.evaluate(symbolTable);
+        String variableName = ((VariableExpression)resultContainerVariable).getId();
 
-        if (!(symbolTable.isDefined(this.variableName) && symbolTable.lookup(this.variableName).getType().equals(new IntType())))
-            throw new UndefinedSymbolException("The given variable \"" + this.variableName + "\" hasn't been defined.");
+        if (!(symbolTable.isDefined(variableName) && symbolTable.lookup(variableName).getType().equals(new IntType())))
+            throw new UndefinedSymbolException("The given variable \"" + variableName + "\" hasn't been defined.");
 
         if (!value.getType().equals(new StringType()))
             throw new FileException("The expression representing the name of the file to be read must be a string.");
@@ -49,13 +51,17 @@ public class ReadFileStatement implements StatementInterface {
         else
             intValue = new IntValue(Integer.parseInt(line));
 
-        symbolTable.put(this.variableName, intValue);
+        symbolTable.put(variableName, intValue);
         state.setSymbolTable(symbolTable);
         return state;
     }
 
     @Override
     public ReadFileStatement clone() {
-        return new ReadFileStatement(this.expression, this.variableName);
+        return new ReadFileStatement(this.expression, this.resultContainerVariable);
+    }
+
+    public String toString() {
+        return "ReadFile(" + this.expression.toString()  + ", " + this.resultContainerVariable.toString() + ")";
     }
 }

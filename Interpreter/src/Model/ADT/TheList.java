@@ -43,9 +43,8 @@ public class TheList<T> implements ListInterface<T> {
         String text = "";
 
         for (int i = 0; i < list.size(); i++) {
-            if (i > 0)
-                text += ", ";
             text += list.get(i);
+            text += "\n";
         }
 
         return text;

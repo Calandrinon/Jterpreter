@@ -44,4 +44,8 @@ public class CloseFileStatement implements StatementInterface {
     public CloseFileStatement clone() {
         return new CloseFileStatement(this.expression);
     }
+
+    public String toString() {
+        return "CloseFile(" + this.expression.toString() + ")";
+    }
 }
