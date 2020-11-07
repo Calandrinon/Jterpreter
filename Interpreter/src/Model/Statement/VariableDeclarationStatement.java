@@ -23,7 +23,7 @@ public class VariableDeclarationStatement implements StatementInterface {
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException {
         DictionaryInterface<String, Value> table = state.getSymbolTable();
-        table.put(name, new UnknownValue(this.type));
+        table.put(name, this.type.defaultValue());
         state.setSymbolTable(table);
         return state;
     }
