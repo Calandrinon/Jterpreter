@@ -80,4 +80,8 @@ public class LogicExpression extends GeneralExpression {
 
         throw new LogicException("Unrecognized operator in expression.");
     }
+
+    public String toString() {
+        return first_expression.toString() + " " + operation + " " + second_expression.toString();
+    }
 }
