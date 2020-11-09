@@ -18,4 +18,9 @@ public class UnknownValue implements Value {
     public String toString() {
         return "Unknown @" + type.toString();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof UnknownValue && this.type.equals(((UnknownValue) other).getType());
+    }
 }
