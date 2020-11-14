@@ -50,6 +50,7 @@ public class View {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
+        HeapInterface heap = new Heap();
 
         StatementInterface example = new CompoundStatement(
                 new VariableDeclarationStatement("v", new IntType()),
@@ -58,7 +59,7 @@ public class View {
                         new PrintStatement(new VariableExpression("v")))
         );
 
-        ProgramState first_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
+        ProgramState first_program = new ProgramState(executionStack, symbolTable, fileTable, heap, output, example);
         this.controller.addProgramState(first_program);
         this.controller.completeExecution();
     }
@@ -72,6 +73,7 @@ public class View {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
+        HeapInterface heap = new Heap();
 
         StatementInterface example = new CompoundStatement(
                 new VariableDeclarationStatement("a", new IntType()),
@@ -90,7 +92,7 @@ public class View {
         );
 
 
-        ProgramState second_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
+        ProgramState second_program = new ProgramState(executionStack, symbolTable, fileTable, heap, output, example);
         this.controller.addProgramState(second_program);
         this.controller.completeExecution();
     }
@@ -103,6 +105,7 @@ public class View {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
+        HeapInterface heap = new Heap();
 
         StatementInterface example = new CompoundStatement(new VariableDeclarationStatement("a",new BoolType()),
                 new CompoundStatement(new VariableDeclarationStatement("v", new IntType()),new CompoundStatement(new AssignmentStatement("a", new ValueExpression(new BoolValue(true))),
@@ -110,7 +113,7 @@ public class View {
                                 IntValue(2))), new AssignmentStatement("v", new ValueExpression(new IntValue(3)))), new PrintStatement(new
                                 VariableExpression("v"))))));
 
-        ProgramState third_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
+        ProgramState third_program = new ProgramState(executionStack, symbolTable, fileTable, heap, output, example);
         this.controller.addProgramState(third_program);
         this.controller.completeExecution();
     }
@@ -123,6 +126,7 @@ public class View {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
+        HeapInterface heap = new Heap();
 
         StatementInterface example = new CompoundStatement(
             new VariableDeclarationStatement("a", new IntType()),
@@ -148,7 +152,7 @@ public class View {
             )
         );
 
-        ProgramState fourth_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
+        ProgramState fourth_program = new ProgramState(executionStack, symbolTable, fileTable, heap, output, example);
         this.controller.addProgramState(fourth_program);
         this.controller.completeExecution();
     }
@@ -158,6 +162,7 @@ public class View {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
+        HeapInterface heap = new Heap();
 
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("test.in", true)));
         writer.println("15");
@@ -190,7 +195,7 @@ public class View {
             )
         );
 
-        ProgramState fifth_program = new ProgramState(executionStack, symbolTable, fileTable, output, example);
+        ProgramState fifth_program = new ProgramState(executionStack, symbolTable, fileTable, heap, output, example);
         this.controller.addProgramState(fifth_program);
         this.controller.completeExecution();
     }

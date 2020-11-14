@@ -37,6 +37,10 @@ public class Heap implements HeapInterface {
         return table.containsKey(id);
     }
 
+    public int getCurrentMaximumKey() {
+        return this.currentMaximumKey;
+    }
+
     public String toString() {
         StringBuilder text = new StringBuilder();
         Set<Integer> keys = table.keySet();

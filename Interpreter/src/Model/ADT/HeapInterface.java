@@ -9,5 +9,6 @@ public interface HeapInterface {
     Value lookup(int key) throws HeapException;
     void remove(int key);
     boolean isDefined(int key);
+    public int getCurrentMaximumKey();
     String toString();
 }

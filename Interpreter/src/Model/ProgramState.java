@@ -15,14 +15,14 @@ public class ProgramState {
     private StatementInterface originalProgram;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
-                        DictionaryInterface<String, BufferedReader> fileTable, ListInterface<Value> out,
+                        DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, ListInterface<Value> out,
                         StatementInterface originalProgram) {
         this.executionStack = executionStack;
         this.symbolTable = symbolTable;
         this.fileTable = fileTable;
         this.out = out;
         this.originalProgram = (StatementInterface) originalProgram.clone();
-        this.heap = new Heap();
+        this.heap = heap;
         executionStack.push(originalProgram);
     }
 
@@ -31,8 +31,9 @@ public class ProgramState {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
+        HeapInterface heap = new Heap();
 
-        return new ProgramState(executionStack, symbolTable, fileTable, output, statement);
+        return new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
     }
 
     public StackInterface<StatementInterface> getExecutionStack() {
@@ -45,6 +46,10 @@ public class ProgramState {
 
     public DictionaryInterface<String, BufferedReader> getFileTable() {
         return fileTable;
+    }
+
+    public HeapInterface getHeap() {
+        return heap;
     }
 
     public ListInterface<Value> getOutput() {
@@ -61,6 +66,10 @@ public class ProgramState {
 
     public void setFileTable(DictionaryInterface<String, BufferedReader> fileTable) {
         this.fileTable = fileTable;
+    }
+
+    public void setHeap(HeapInterface heap) {
+        this.heap = heap;
     }
 
     public void setOutput(ListInterface<Value> out) {

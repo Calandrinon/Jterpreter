@@ -20,4 +20,12 @@ public class RefValue implements Value {
     public Type getType() {
         return new RefType(locationType);
     }
+
+    public void setAddress(int address) {
+        this.address = address;
+    }
+
+    public String toString() {
+        return "(" + String.valueOf(address) + ", " + locationType.toString()  + ")";
+    }
 }
