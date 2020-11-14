@@ -11,6 +11,7 @@ public class ProgramState {
     private DictionaryInterface<String, Value> symbolTable;
     private DictionaryInterface<String, BufferedReader> fileTable;
     private ListInterface<Value> out;
+    private HeapInterface heap;
     private StatementInterface originalProgram;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
@@ -21,6 +22,7 @@ public class ProgramState {
         this.fileTable = fileTable;
         this.out = out;
         this.originalProgram = (StatementInterface) originalProgram.clone();
+        this.heap = new Heap();
         executionStack.push(originalProgram);
     }
 
@@ -75,5 +77,4 @@ public class ProgramState {
         text += "Execution stack: \n" + executionStackString + "\nSymbol table:\n" + symbolTableString + "\nOutput:\n" + outString + "\nFile table:\n" + fileTableString + "\n\n";
         return text;
     }
-
 }
