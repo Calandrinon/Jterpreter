@@ -28,7 +28,7 @@ public class IfStatement implements StatementInterface {
 
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException {
-        Value value = this.expression.evaluate(state.getSymbolTable());
+        Value value = this.expression.evaluate(state.getSymbolTable(), state.getHeap());
         if (value.getType().equals(new BoolType())) {
             BoolValue boolValue = (BoolValue)value;
             StackInterface<StatementInterface> stack = state.getExecutionStack();

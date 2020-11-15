@@ -2,6 +2,7 @@ package Model.Expression;
 
 import Exceptions.GeneralException;
 import Exceptions.LogicException;
+import Model.ADT.HeapInterface;
 import Model.Type.BoolType;
 import Model.Type.IntType;
 import Model.Type.Type;
@@ -34,26 +35,26 @@ public class LogicExpression extends GeneralExpression {
         this.second_expression = second_expression;
     }
 
-    private void checkTypeEquality(DictionaryInterface<String, Value> table, Type type) throws LogicException {
-        Value first_expression_result = first_expression.evaluate(table);
-        Value second_expression_result = second_expression.evaluate(table);
+    private void checkTypeEquality(DictionaryInterface<String, Value> table, HeapInterface heap, Type type) throws LogicException {
+        Value first_expression_result = first_expression.evaluate(table, heap);
+        Value second_expression_result = second_expression.evaluate(table, heap);
 
         if (!(first_expression_result.getType().equals(type) && second_expression_result.getType().equals(type)))
             throw new LogicException("The result of one of the contained expressions is not an instance of the" + type.toString() + " class.");
     }
 
     @Override
-    public Value evaluate(DictionaryInterface<String, Value> table) throws GeneralException {
-        Value first_expression_result = first_expression.evaluate(table);
-        Value second_expression_result = second_expression.evaluate(table);
+    public Value evaluate(DictionaryInterface<String, Value> table, HeapInterface heap) throws GeneralException {
+        Value first_expression_result = first_expression.evaluate(table, heap);
+        Value second_expression_result = second_expression.evaluate(table, heap);
 
         switch (operation) {
             case "&&":
-                this.checkTypeEquality(table, new BoolType());
+                this.checkTypeEquality(table, heap, new BoolType());
                 return new BoolValue(((BoolValue) first_expression_result).getValue()
                         && ((BoolValue) second_expression_result).getValue());
             case "||":
-                this.checkTypeEquality(table, new BoolType());
+                this.checkTypeEquality(table, heap, new BoolType());
                 return new BoolValue(((BoolValue) first_expression_result).getValue()
                         || ((BoolValue) second_expression_result).getValue());
             case "==":
@@ -61,19 +62,19 @@ public class LogicExpression extends GeneralExpression {
             case "!=":
                 return new BoolValue(!first_expression_result.equals(second_expression_result));
             case "<":
-                this.checkTypeEquality(table, new IntType());
+                this.checkTypeEquality(table, heap, new IntType());
                 return new BoolValue(((IntValue) first_expression_result).getValue()
                         < ((IntValue) second_expression_result).getValue());
             case "<=":
-                this.checkTypeEquality(table, new IntType());
+                this.checkTypeEquality(table, heap, new IntType());
                 return new BoolValue(((IntValue) first_expression_result).getValue()
                         <= ((IntValue) second_expression_result).getValue());
             case ">":
-                this.checkTypeEquality(table, new IntType());
+                this.checkTypeEquality(table, heap, new IntType());
                 return new BoolValue(((IntValue) first_expression_result).getValue()
                         > ((IntValue) second_expression_result).getValue());
             case ">=":
-                this.checkTypeEquality(table, new IntType());
+                this.checkTypeEquality(table, heap, new IntType());
                 return new BoolValue(((IntValue) first_expression_result).getValue()
                         >= ((IntValue) second_expression_result).getValue());
         }

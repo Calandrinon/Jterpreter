@@ -3,6 +3,8 @@ import Exceptions.GeneralException;
 import Exceptions.UndefinedSymbolException;
 import Model.*;
 import Model.ADT.DictionaryInterface;
+import Model.ADT.Heap;
+import Model.ADT.HeapInterface;
 import Model.ADT.StackInterface;
 import Model.Expression.GeneralExpression;
 import Model.Type.Type;
@@ -37,9 +39,10 @@ public class AssignmentStatement implements StatementInterface {
     public ProgramState execute(ProgramState state) throws GeneralException {
         StackInterface<StatementInterface> stack = state.getExecutionStack();
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();
+        HeapInterface heap = state.getHeap();
 
         if (symbolTable.isDefined(id)) {
-            Value value = expression.evaluate(symbolTable);
+            Value value = expression.evaluate(symbolTable, heap);
             Type typeID = (symbolTable.lookup(id)).getType();
             if (value.getType().equals(typeID)) {
                 symbolTable.put(id, value);

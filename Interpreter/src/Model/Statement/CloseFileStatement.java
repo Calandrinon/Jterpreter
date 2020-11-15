@@ -3,6 +3,7 @@ package Model.Statement;
 import Exceptions.FileException;
 import Exceptions.GeneralException;
 import Model.ADT.DictionaryInterface;
+import Model.ADT.HeapInterface;
 import Model.Expression.GeneralExpression;
 import Model.ProgramState;
 import Model.Type.StringType;
@@ -22,8 +23,9 @@ public class CloseFileStatement implements StatementInterface {
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException, IOException {
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();
+        HeapInterface heap = state.getHeap();
         DictionaryInterface<String, BufferedReader> fileTable = state.getFileTable();
-        Value value = expression.evaluate(symbolTable);
+        Value value = expression.evaluate(symbolTable, heap);
 
         if (!value.getType().equals(new StringType()))
             throw new FileException("The expression representing the name of the file to be closed must be a string.");

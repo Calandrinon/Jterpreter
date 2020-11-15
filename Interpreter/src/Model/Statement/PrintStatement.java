@@ -24,7 +24,7 @@ public class PrintStatement implements StatementInterface {
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException {
         ListInterface<Value> outputAsList = state.getOutput();
-        outputAsList.add(expression.evaluate(state.getSymbolTable()));
+        outputAsList.add(expression.evaluate(state.getSymbolTable(), state.getHeap()));
         state.setOutput(outputAsList);
         return state;
     }

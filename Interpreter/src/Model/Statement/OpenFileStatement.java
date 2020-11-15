@@ -4,6 +4,7 @@ import Exceptions.DictionaryException;
 import Exceptions.FileException;
 import Exceptions.GeneralException;
 import Model.ADT.DictionaryInterface;
+import Model.ADT.HeapInterface;
 import Model.ADT.TheDictionary;
 import Model.Expression.GeneralExpression;
 import Model.ProgramState;
@@ -25,8 +26,9 @@ public class OpenFileStatement implements StatementInterface {
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException, FileNotFoundException {
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();
+        HeapInterface heap = state.getHeap();
         DictionaryInterface<String, BufferedReader> fileTable = state.getFileTable();
-        Value value = this.expression.evaluate(symbolTable);
+        Value value = this.expression.evaluate(symbolTable, heap);
 
         if (!value.getType().equals(new StringType()))
             throw new FileException("The expression in the file opening statement should be a string.");

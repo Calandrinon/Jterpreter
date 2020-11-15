@@ -82,8 +82,9 @@ public class ProgramState {
         String symbolTableString = symbolTable.toString();
         String outString = out.toString();
         String fileTableString = fileTable.toString();
+        String heapString = heap.toString();
 
-        text += "Execution stack: \n" + executionStackString + "\nSymbol table:\n" + symbolTableString + "\nOutput:\n" + outString + "\nFile table:\n" + fileTableString + "\n\n";
+        text += "Execution stack: \n" + executionStackString + "\nSymbol table:\n" + symbolTableString + "\nHeap:\n" + heapString + "\nOutput:\n" + outString + "\nFile table:\n" + fileTableString + "\n\n";
         return text;
     }
 }

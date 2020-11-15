@@ -1,6 +1,7 @@
 package Tests;
 
 import Model.ADT.DictionaryInterface;
+import Model.ADT.Heap;
 import Model.ADT.TheDictionary;
 import Model.Expression.ArithmeticExpression;
 import Model.Expression.LogicExpression;
@@ -17,102 +18,108 @@ class LogicExpressionTest {
     @Test
     void testAndOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
-
+        Heap heap = new Heap();
         symbolTable.put("a", new BoolValue(true));
         symbolTable.put("b", new BoolValue(true));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("a"), "&&", new VariableExpression("b"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), true);
     }
 
     @Test
     void testOrOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
-
+        Heap heap = new Heap();
         symbolTable.put("a", new BoolValue(true));
         symbolTable.put("b", new BoolValue(false));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("a"), "||", new VariableExpression("b"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), true);
     }
 
     @Test
     void testEqualityOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
+        Heap heap = new Heap();
         Value arithmeticExpressionResult = new ArithmeticExpression("+",
-                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable);
+                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable, heap);
         symbolTable.put("a",arithmeticExpressionResult);
         symbolTable.put("b", new IntValue(3));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("a"), "==", new VariableExpression("b"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), true);
     }
 
     @Test
     void testNonEqualityOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
+        Heap heap = new Heap();
         Value arithmeticExpressionResult = new ArithmeticExpression("+",
-                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable);
+                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable, heap);
         symbolTable.put("a",arithmeticExpressionResult);
         symbolTable.put("b", new IntValue(3));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("a"), "!=", new VariableExpression("b"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), false);
     }
 
     @Test
     void testLessThanOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
+        Heap heap = new Heap();
         Value arithmeticExpressionResult = new ArithmeticExpression("+",
-                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable);
+                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable, heap);
         symbolTable.put("a",arithmeticExpressionResult);
         symbolTable.put("b", new IntValue(9000));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("a"), "<", new VariableExpression("b"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), true);
     }
 
     @Test
     void testLessThanOrEqualToOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
+        Heap heap = new Heap();
         Value arithmeticExpressionResult = new ArithmeticExpression("+",
-                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable);
+                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable, heap);
         symbolTable.put("a",arithmeticExpressionResult);
         symbolTable.put("b", new IntValue(3));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("a"), "<=", new VariableExpression("b"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), true);
     }
 
     @Test
     void testGreaterThanOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
+        Heap heap = new Heap();
         Value arithmeticExpressionResult = new ArithmeticExpression("+",
-                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable);
+                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable, heap);
         symbolTable.put("a",arithmeticExpressionResult);
         symbolTable.put("b", new IntValue(3));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("b"), ">", new VariableExpression("a"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), false);
     }
 
     @Test
     void testGreaterThanOrEqualToOperator() {
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<>();
+        Heap heap = new Heap();
         Value arithmeticExpressionResult = new ArithmeticExpression("+",
-                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable);
+                new ValueExpression(new IntValue(2)), new ValueExpression(new IntValue(1))).evaluate(symbolTable, heap);
         symbolTable.put("a",arithmeticExpressionResult);
         symbolTable.put("b", new IntValue(3));
         LogicExpression logicExpression = new LogicExpression(
                 new VariableExpression("b"), ">=", new VariableExpression("a"));
-        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable);
+        BoolValue value = (BoolValue) logicExpression.evaluate(symbolTable, heap);
         Assertions.assertEquals(value.getValue(), true);
     }
 

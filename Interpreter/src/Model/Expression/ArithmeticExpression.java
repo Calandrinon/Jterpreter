@@ -3,6 +3,7 @@ package Model.Expression;
 import Exceptions.ArithmeticException;
 import Exceptions.GeneralException;
 import Model.ADT.DictionaryInterface;
+import Model.ADT.HeapInterface;
 import Model.Type.IntType;
 import Model.Value.IntValue;
 import Model.Value.Value;
@@ -37,12 +38,12 @@ public class ArithmeticExpression extends GeneralExpression {
     }
 
     @Override
-    public Value evaluate(DictionaryInterface<String, Value> table) throws GeneralException {
+    public Value evaluate(DictionaryInterface<String, Value> table, HeapInterface heap) throws GeneralException {
         Value first_value, second_value;
-        first_value = first_expression.evaluate(table);
+        first_value = first_expression.evaluate(table, heap);
 
         if (first_value.getType().equals(new IntType())) {
-            second_value = second_expression.evaluate(table);
+            second_value = second_expression.evaluate(table, heap);
 
             if (second_value.getType().equals(new IntType())) {
                 IntValue first_integer = (IntValue)first_value;

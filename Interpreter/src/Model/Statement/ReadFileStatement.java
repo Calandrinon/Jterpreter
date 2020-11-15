@@ -4,6 +4,7 @@ import Exceptions.FileException;
 import Exceptions.GeneralException;
 import Exceptions.UndefinedSymbolException;
 import Model.ADT.DictionaryInterface;
+import Model.ADT.HeapInterface;
 import Model.Expression.GeneralExpression;
 import Model.Expression.VariableExpression;
 import Model.ProgramState;
@@ -28,9 +29,10 @@ public class ReadFileStatement implements StatementInterface {
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException, IOException {
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();
+        HeapInterface heap = state.getHeap();
         DictionaryInterface<String, BufferedReader> fileTable = state.getFileTable();
-        Value value = expression.evaluate(symbolTable);
-        Value variable = resultContainerVariable.evaluate(symbolTable);
+        Value value = expression.evaluate(symbolTable, heap);
+        Value variable = resultContainerVariable.evaluate(symbolTable, heap);
         String variableName = ((VariableExpression)resultContainerVariable).getId();
 
         if (!(symbolTable.isDefined(variableName) && symbolTable.lookup(variableName).getType().equals(new IntType())))
