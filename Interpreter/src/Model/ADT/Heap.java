@@ -19,6 +19,12 @@ public class Heap implements HeapInterface {
         table.put(currentMaximumKey, value);
     }
 
+    public void put(int address, Value value) {
+        if (address > this.currentMaximumKey)
+            throw new HeapException("The address hasn't been allocated.");
+        table.put(address, value);
+    }
+
     @Override
     public Value lookup(int key) throws HeapException {
         Value value = table.get(key);

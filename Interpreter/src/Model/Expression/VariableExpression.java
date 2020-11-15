@@ -1,5 +1,6 @@
 package Model.Expression;
 
+import Exceptions.DictionaryException;
 import Exceptions.GeneralException;
 import Model.ADT.DictionaryInterface;
 import Model.ADT.HeapInterface;
@@ -13,7 +14,7 @@ public class VariableExpression extends GeneralExpression {
     }
 
     @Override
-    public Value evaluate(DictionaryInterface<String, Value> table, HeapInterface heap) throws GeneralException {
+    public Value evaluate(DictionaryInterface<String, Value> table, HeapInterface heap) throws DictionaryException {
         return table.lookup(id);
     }
 

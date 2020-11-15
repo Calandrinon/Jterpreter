@@ -74,4 +74,32 @@ public class HeapAllocationTest  {
 
         Assertions.assertEquals(output.toString(), "20\n");
     }
+
+    @Test
+    public void testHeapWrite() throws IOException {
+        StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output = new TheList<Value>();
+        HeapInterface heap = new Heap();
+
+        CompoundStatement statement = new CompoundStatement(
+        new VariableDeclarationStatement("v", new RefType(new IntType())),
+        new CompoundStatement(
+        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+        new CompoundStatement(
+        new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
+        new CompoundStatement(
+        new HeapWriteStatement(new VariableExpression("v"), new ValueExpression(new IntValue(30))),
+        new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new VariableExpression("v")), new ValueExpression(new IntValue(5))))
+        ))));
+
+        ProgramState state = new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
+        RepositoryInterface repository = new Repository("heaptest3.txt");
+        Controller controller = new Controller(repository);
+        controller.addProgramState(state);
+        controller.completeExecution();
+
+        Assertions.assertEquals(output.toString(), "20\n35\n");
+    }
 }
