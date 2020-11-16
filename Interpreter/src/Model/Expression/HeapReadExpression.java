@@ -25,8 +25,6 @@ public class HeapReadExpression extends GeneralExpression {
         RefValue refValue = (RefValue)expressionValue;
         int refAddress = refValue.getAddress();
 
-        System.out.println(heap.toString());
-
         if (!heap.isDefined(refAddress))
             throw new HeapException("The address is not a valid key in the heap table.");
 

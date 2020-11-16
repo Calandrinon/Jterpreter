@@ -45,8 +45,6 @@ public class WhileStatementTest {
         Controller controller = new Controller(repository);
         controller.addProgramState(state);
         controller.completeExecution();
-
         //Assertions.assertEquals(heap.lookup(1), new IntValue(20));
-
     }
 }

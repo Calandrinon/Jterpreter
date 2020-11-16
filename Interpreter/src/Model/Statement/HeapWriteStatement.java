@@ -59,6 +59,6 @@ public class HeapWriteStatement implements StatementInterface {
     }
 
     public String toString() {
-        return "wH(" + variableExpression.toString() + ")";
+        return "wH(" + variableExpression.toString() + ", #" + ")";
     }
 }

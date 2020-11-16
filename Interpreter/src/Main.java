@@ -1,14 +1,12 @@
 import Controller.Controller;
 import Exceptions.GeneralException;
 import Model.ADT.*;
-import Model.Expression.ArithmeticExpression;
-import Model.Expression.LogicExpression;
-import Model.Expression.ValueExpression;
-import Model.Expression.VariableExpression;
+import Model.Expression.*;
 import Model.ProgramState;
 import Model.Statement.*;
 import Model.Type.BoolType;
 import Model.Type.IntType;
+import Model.Type.RefType;
 import Model.Type.StringType;
 import Model.Value.BoolValue;
 import Model.Value.IntValue;
@@ -20,6 +18,7 @@ import View.View;
 import View.TextMenu;
 import View.ExitCommand;
 import View.RunExample;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.*;
 import java.util.Scanner;
@@ -135,6 +134,123 @@ public class Main {
         RepositoryInterface repository5 = new Repository("log5.txt");
         Controller controller5 = new Controller(repository5);
         controller5.addProgramState(program5);
+        ///--------------------------------------------------------------------------------------------
+        StackInterface<StatementInterface> executionStack6 = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable6 = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable6 = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output6 = new TheList<Value>();
+        HeapInterface heap6 = new Heap();
+
+        CompoundStatement statement6 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new RefType(new IntType())),
+                new CompoundStatement(
+                        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(
+                                new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
+                                new CompoundStatement(
+                                        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+                                        new CompoundStatement(
+                                                new PrintStatement(new VariableExpression("v")),
+                                                new PrintStatement(new VariableExpression("a"))
+                                        )))));
+
+        ProgramState state6 = new ProgramState(executionStack6, symbolTable6, fileTable6, heap6, output6, statement6);
+        RepositoryInterface repository6 = new Repository("log7.txt");
+        Controller controller6 = new Controller(repository6);
+        controller6.addProgramState(state6);
+        ///--------------------------------------------------------------------------------------------
+        StackInterface<StatementInterface> executionStack7 = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable7 = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable7 = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output7 = new TheList<Value>();
+        HeapInterface heap7 = new Heap();
+
+        CompoundStatement statement7 = new CompoundStatement(
+        new VariableDeclarationStatement("v", new RefType(new IntType())),
+        new CompoundStatement(
+        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+        new CompoundStatement(
+        new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
+        new CompoundStatement(
+        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+        new CompoundStatement(
+        new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
+        new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new HeapReadExpression(new VariableExpression("a"))), new ValueExpression(new IntValue(5)))))))));
+
+        ProgramState state7 = new ProgramState(executionStack7, symbolTable7, fileTable7, heap7, output7, statement7);
+        RepositoryInterface repository7 = new Repository("log7.txt");
+        Controller controller7 = new Controller(repository7);
+        controller7.addProgramState(state7);
+        ///--------------------------------------------------------------------------------------------
+        StackInterface<StatementInterface> executionStack8 = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable8 = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable8 = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output8 = new TheList<Value>();
+        HeapInterface heap8 = new Heap();
+
+        CompoundStatement statement8 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new RefType(new IntType())),
+                new CompoundStatement(
+                        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(
+                                new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
+                                new CompoundStatement(
+                                        new HeapWriteStatement(new VariableExpression("v"), new ValueExpression(new IntValue(30))),
+                                        new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new VariableExpression("v")), new ValueExpression(new IntValue(5))))
+                                ))));
+
+        ProgramState state8 = new ProgramState(executionStack8, symbolTable8, fileTable8, heap8, output8, statement8);
+        RepositoryInterface repository8 = new Repository("log8.txt");
+        Controller controller8 = new Controller(repository8);
+        controller8.addProgramState(state8);
+
+        ///--------------------------------------------------------------------------------------------
+        StackInterface<StatementInterface> executionStack9 = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable9 = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable9 = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output9 = new TheList<Value>();
+        HeapInterface heap9 = new Heap();
+
+        CompoundStatement statement9 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new RefType(new IntType())),
+                new CompoundStatement(
+                        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(
+                                new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
+                                new CompoundStatement(
+                                        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+                                        new CompoundStatement(
+                                                new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(30))),
+                                                new PrintStatement(new HeapReadExpression(new HeapReadExpression(new VariableExpression("a"))))
+                                        )))));
+
+        ProgramState state9 = new ProgramState(executionStack9, symbolTable9, fileTable9, heap9, output9, statement9);
+        RepositoryInterface repository9 = new Repository("log9.txt");
+        Controller controller9 = new Controller(repository9);
+        controller9.addProgramState(state9);
+        ///--------------------------------------------------------------------------------------------
+        StackInterface<StatementInterface> executionStack10 = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable10 = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable10 = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output10 = new TheList<Value>();
+        HeapInterface heap10 = new Heap();
+
+        CompoundStatement statement10 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new IntType()),
+                new CompoundStatement(
+                        new AssignmentStatement("v", new ValueExpression(new IntValue(4))),
+                        new CompoundStatement(
+                                new WhileStatement(new LogicExpression(new VariableExpression("v"), ">", new ValueExpression(new IntValue(0))),
+                                        new CompoundStatement(
+                                                new PrintStatement(new VariableExpression("v")),
+                                                new AssignmentStatement("v", new ArithmeticExpression("-", new VariableExpression("v"), new ValueExpression(new IntValue(1)))))),
+                                new PrintStatement(new VariableExpression("v")))));
+
+        ProgramState state10 = new ProgramState(executionStack10, symbolTable10, fileTable10, heap10, output10, statement10);
+        RepositoryInterface repository10 = new Repository("whilestatementest.txt");
+        Controller controller10 = new Controller(repository10);
+        controller10.addProgramState(state10);
+        ///--------------------------------------------------------------------------------------------
 
 
         TextMenu textMenu = new TextMenu();
@@ -144,6 +260,11 @@ public class Main {
         textMenu.addCommand(new RunExample("3", example3.toString(), controller3));
         textMenu.addCommand(new RunExample("4", example4.toString(), controller4));
         textMenu.addCommand(new RunExample("5", example5.toString(), controller5));
+        textMenu.addCommand(new RunExample("6", statement6.toString(), controller6));
+        textMenu.addCommand(new RunExample("7", statement7.toString(), controller7));
+        textMenu.addCommand(new RunExample("8", statement8.toString(), controller8));
+        textMenu.addCommand(new RunExample("9", statement9.toString(), controller9));
+        textMenu.addCommand(new RunExample("10", statement10.toString(), controller10));
         textMenu.show();
     }
 }
