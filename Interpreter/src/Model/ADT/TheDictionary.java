@@ -3,15 +3,15 @@ package Model.ADT;
 import Exceptions.DictionaryException;
 import Model.ADT.DictionaryInterface;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
 public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
-    Hashtable<K, V> table;
+    HashMap<K, V> table;
 
     public TheDictionary() {
-        table = new Hashtable<K, V>();
+        table = new HashMap<K, V>();
     }
 
     @Override
@@ -30,6 +30,11 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
     @Override
     public void remove(K key) {
         table.remove(key);
+    }
+
+    @Override
+    public HashMap<K, V> getContent() {
+        return table;
     }
 
     @Override

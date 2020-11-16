@@ -5,13 +5,14 @@ import Exceptions.HeapException;
 import Model.ADT.DictionaryInterface;
 import Model.ADT.HeapInterface;
 import Model.Type.RefType;
+import Model.Value.IntValue;
 import Model.Value.RefValue;
 import Model.Value.Value;
 
 public class HeapReadExpression extends GeneralExpression {
-    private VariableExpression expression;
+    private GeneralExpression expression;
 
-    public HeapReadExpression(VariableExpression expression) {
+    public HeapReadExpression(GeneralExpression expression) {
         this.expression = expression;
     }
 
@@ -23,7 +24,6 @@ public class HeapReadExpression extends GeneralExpression {
 
         RefValue refValue = (RefValue)expressionValue;
         int refAddress = refValue.getAddress();
-        System.out.println("REFADDRESS: " + refAddress);
 
         System.out.println(heap.toString());
 
@@ -34,6 +34,6 @@ public class HeapReadExpression extends GeneralExpression {
     }
 
     public String toString() {
-        return "*" + expression.getId();
+        return expression.toString();
     }
 }

@@ -2,6 +2,7 @@ package Model.ADT;
 import Exceptions.HeapException;
 import Model.Value.Value;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class Heap implements HeapInterface {
@@ -41,6 +42,16 @@ public class Heap implements HeapInterface {
     @Override
     public boolean isDefined(int id) {
         return table.containsKey(id);
+    }
+
+    @Override
+    public void setContent(Map<Integer, Value> map) {
+        this.table = (HashMap<Integer, Value>) map;
+    }
+
+    @Override
+    public Map<Integer, Value> getContent() {
+        return table;
     }
 
     public int getCurrentMaximumKey() {

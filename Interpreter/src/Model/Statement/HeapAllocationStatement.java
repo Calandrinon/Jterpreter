@@ -4,6 +4,7 @@ import Exceptions.DictionaryException;
 import Exceptions.GeneralException;
 import Exceptions.HeapException;
 import Model.ADT.DictionaryInterface;
+import Model.ADT.Heap;
 import Model.ADT.HeapInterface;
 import Model.ADT.TheDictionary;
 import Model.Expression.GeneralExpression;
@@ -15,6 +16,8 @@ import Model.Value.IntValue;
 import Model.Value.RefValue;
 import Model.Value.Value;
 import java.io.IOException;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HeapAllocationStatement implements StatementInterface {
     private VariableExpression variableExpression;
@@ -40,8 +43,28 @@ public class HeapAllocationStatement implements StatementInterface {
         if (!variableValue.getType().equals(new RefType(expressionType)))
             throw new HeapException("The variable does not have the type RefType referencing a value of type" + expressionType.toString());
 
+        RefValue value = (RefValue)symbolTable.lookup(variableName);
+        boolean invalidAddress = false;
+        if (heap.isDefined(value.getAddress())) {
+            invalidAddress = true;
+        }
+
         heap.put(expressionValue);
         RefValue refValue = new RefValue(heap.getCurrentMaximumKey(), expressionType);
+
+        if (invalidAddress) {
+            Map<Integer, Value> newMap = heap.getContent().entrySet().stream()
+                    .map(x -> {
+                        if (x.getValue().getType() instanceof RefType) {
+                            RefValue refValueInner = (RefValue)x.getValue();
+                            refValueInner.setAddress(heap.getCurrentMaximumKey());
+                            x.setValue(refValueInner);
+                        }
+                        return x;})
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            heap.setContent(newMap);
+        }
+
         symbolTable.put(variableName, refValue);
         state.setSymbolTable(symbolTable);
 
