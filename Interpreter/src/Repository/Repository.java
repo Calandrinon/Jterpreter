@@ -26,23 +26,28 @@ public class Repository implements RepositoryInterface {
     public void addNewFile(String logFilePath) {
         this.logFilePath = logFilePath;
     }
-    public void pushFront(ProgramState state) {container.pushFront(state);}
+
     public void clear() {
         container.clear();
     }
 
+
     @Override
-    public ProgramState getCurrentProgramState() throws ListException {
-        ProgramState state = container.get(0);
-        container.remove(0);
-        return state;
+    public TheList<ProgramState> getProgramList() {
+        return container;
     }
 
     @Override
-    public void logProgramState() throws GeneralException, IOException {
+    public void setProgramList(TheList<ProgramState> newList) {
+        container = newList;
+    }
+
+    @Override
+    public void logProgramState(ProgramState state) throws GeneralException, IOException {
         try {
             PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
-            logFile.println(container.get(0).toString());
+            logFile.println("ProgramState ID: " + state.getId());
+            logFile.println(state.toString());
             logFile.close();
         } catch (Exception e) {
             System.out.println(e);

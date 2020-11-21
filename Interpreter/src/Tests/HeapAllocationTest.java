@@ -44,8 +44,7 @@ public class HeapAllocationTest  {
 
         ProgramState state = new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
         RepositoryInterface repository = new Repository("heaptest1.txt");
-        Controller controller = new Controller(repository);
-        controller.addProgramState(state);
+        Controller controller = new Controller(repository, state);
         controller.completeExecution();
 
         Assertions.assertEquals(heap.lookup(1), new IntValue(20));
@@ -68,8 +67,7 @@ public class HeapAllocationTest  {
 
         ProgramState state = new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
         RepositoryInterface repository = new Repository("heaptest2.txt");
-        Controller controller = new Controller(repository);
-        controller.addProgramState(state);
+        Controller controller = new Controller(repository, state);
         controller.completeExecution();
 
         Assertions.assertEquals(output.toString(), "20\n");
@@ -96,8 +94,7 @@ public class HeapAllocationTest  {
 
         ProgramState state = new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
         RepositoryInterface repository = new Repository("heaptest3.txt");
-        Controller controller = new Controller(repository);
-        controller.addProgramState(state);
+        Controller controller = new Controller(repository, state);
         controller.completeExecution();
 
         Assertions.assertEquals(output.toString(), "20\n35\n");
@@ -126,8 +123,7 @@ public class HeapAllocationTest  {
 
         ProgramState state = new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
         RepositoryInterface repository = new Repository("heaptest4.txt");
-        Controller controller = new Controller(repository);
-        controller.addProgramState(state);
+        Controller controller = new Controller(repository, state);
         controller.completeExecution();
 
         Assertions.assertEquals(output.toString(), "30\n");

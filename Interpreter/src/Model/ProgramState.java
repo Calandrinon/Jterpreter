@@ -1,10 +1,13 @@
 package Model;
 
+import Exceptions.GeneralException;
+import Exceptions.StackException;
 import Model.ADT.*;
 import Model.Statement.StatementInterface;
 import Model.Value.Value;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class ProgramState {
     private StackInterface<StatementInterface> executionStack;
@@ -13,6 +16,7 @@ public class ProgramState {
     private ListInterface<Value> out;
     private HeapInterface heap;
     private StatementInterface originalProgram;
+    private static int id;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
                         DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, ListInterface<Value> out,
@@ -34,6 +38,26 @@ public class ProgramState {
         HeapInterface heap = new Heap();
 
         return new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
+    }
+
+    public boolean isNotCompleted() {
+        return !executionStack.isEmpty();
+    }
+
+    public ProgramState oneStepExecution() throws GeneralException, IOException {
+        if (executionStack.isEmpty())
+            throw new StackException("Can't execute instruction: Program state stack is empty.");
+
+        StatementInterface currentStatement = executionStack.pop();
+        return currentStatement.execute(this);
+    }
+
+    public static synchronized void setId(int new_id) {
+        id = new_id;
+    }
+
+    public static synchronized int getId() {
+        return id;
     }
 
     public StackInterface<StatementInterface> getExecutionStack() {

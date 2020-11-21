@@ -14,14 +14,11 @@ import Model.Value.StringValue;
 import Model.Value.Value;
 import Repository.Repository;
 import Repository.RepositoryInterface;
-import View.View;
 import View.TextMenu;
 import View.ExitCommand;
 import View.RunExample;
-import org.junit.jupiter.api.Assertions;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws GeneralException, IOException {
@@ -35,8 +32,7 @@ public class Main {
 
         ProgramState program1= ProgramState.createNewProgramState(example1);
         RepositoryInterface repository1 = new Repository("log1.txt");
-        Controller controller1 = new Controller(repository1);
-        controller1.addProgramState(program1);
+        Controller controller1 = new Controller(repository1, program1);
         ///--------------------------------------------------------------------------------------------
         StatementInterface example2 = new CompoundStatement(
                 new VariableDeclarationStatement("a", new IntType()),
@@ -56,8 +52,7 @@ public class Main {
 
         ProgramState program2= ProgramState.createNewProgramState(example2);
         RepositoryInterface repository2 = new Repository("log2.txt");
-        Controller controller2 = new Controller(repository2);
-        controller2.addProgramState(program2);
+        Controller controller2 = new Controller(repository2, program2);
         ///--------------------------------------------------------------------------------------------
         StatementInterface example3 = new CompoundStatement(new VariableDeclarationStatement("a",new BoolType()),
                 new CompoundStatement(new VariableDeclarationStatement("v", new IntType()),new CompoundStatement(new AssignmentStatement("a", new ValueExpression(new BoolValue(true))),
@@ -67,8 +62,7 @@ public class Main {
 
         ProgramState program3= ProgramState.createNewProgramState(example3);
         RepositoryInterface repository3 = new Repository("log3.txt");
-        Controller controller3 = new Controller(repository3);
-        controller3.addProgramState(program3);
+        Controller controller3 = new Controller(repository3, program3);
         ///--------------------------------------------------------------------------------------------
         StatementInterface example4 = new CompoundStatement(
                 new VariableDeclarationStatement("a", new IntType()),
@@ -96,8 +90,7 @@ public class Main {
 
         ProgramState program4= ProgramState.createNewProgramState(example4);
         RepositoryInterface repository4 = new Repository("log4.txt");
-        Controller controller4 = new Controller(repository4);
-        controller4.addProgramState(program4);
+        Controller controller4 = new Controller(repository4, program4);
         ///--------------------------------------------------------------------------------------------
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("test.in", true)));
         writer.println("15");
@@ -132,8 +125,7 @@ public class Main {
 
         ProgramState program5= ProgramState.createNewProgramState(example5);
         RepositoryInterface repository5 = new Repository("log5.txt");
-        Controller controller5 = new Controller(repository5);
-        controller5.addProgramState(program5);
+        Controller controller5 = new Controller(repository5, program5);
         ///--------------------------------------------------------------------------------------------
         StackInterface<StatementInterface> executionStack6 = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable6 = new TheDictionary<String, Value>();
@@ -156,8 +148,7 @@ public class Main {
 
         ProgramState state6 = new ProgramState(executionStack6, symbolTable6, fileTable6, heap6, output6, statement6);
         RepositoryInterface repository6 = new Repository("log7.txt");
-        Controller controller6 = new Controller(repository6);
-        controller6.addProgramState(state6);
+        Controller controller6 = new Controller(repository6, state6);
         ///--------------------------------------------------------------------------------------------
         StackInterface<StatementInterface> executionStack7 = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable7 = new TheDictionary<String, Value>();
@@ -179,8 +170,7 @@ public class Main {
 
         ProgramState state7 = new ProgramState(executionStack7, symbolTable7, fileTable7, heap7, output7, statement7);
         RepositoryInterface repository7 = new Repository("log7.txt");
-        Controller controller7 = new Controller(repository7);
-        controller7.addProgramState(state7);
+        Controller controller7 = new Controller(repository7, state7);
         ///--------------------------------------------------------------------------------------------
         StackInterface<StatementInterface> executionStack8 = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable8 = new TheDictionary<String, Value>();
@@ -201,9 +191,7 @@ public class Main {
 
         ProgramState state8 = new ProgramState(executionStack8, symbolTable8, fileTable8, heap8, output8, statement8);
         RepositoryInterface repository8 = new Repository("log8.txt");
-        Controller controller8 = new Controller(repository8);
-        controller8.addProgramState(state8);
-
+        Controller controller8 = new Controller(repository8, state8);
         ///--------------------------------------------------------------------------------------------
         StackInterface<StatementInterface> executionStack9 = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable9 = new TheDictionary<String, Value>();
@@ -226,8 +214,7 @@ public class Main {
 
         ProgramState state9 = new ProgramState(executionStack9, symbolTable9, fileTable9, heap9, output9, statement9);
         RepositoryInterface repository9 = new Repository("log9.txt");
-        Controller controller9 = new Controller(repository9);
-        controller9.addProgramState(state9);
+        Controller controller9 = new Controller(repository9, state9);
         ///--------------------------------------------------------------------------------------------
         StackInterface<StatementInterface> executionStack10 = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable10 = new TheDictionary<String, Value>();
@@ -248,8 +235,7 @@ public class Main {
 
         ProgramState state10 = new ProgramState(executionStack10, symbolTable10, fileTable10, heap10, output10, statement10);
         RepositoryInterface repository10 = new Repository("whilestatementest.txt");
-        Controller controller10 = new Controller(repository10);
-        controller10.addProgramState(state10);
+        Controller controller10 = new Controller(repository10, state10);
         ///--------------------------------------------------------------------------------------------
 
 

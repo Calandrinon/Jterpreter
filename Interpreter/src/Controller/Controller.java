@@ -20,9 +20,11 @@ import java.util.stream.Collectors;
 
 public class Controller {
     private RepositoryInterface repository;
+    private ProgramState state;
 
-    public Controller(RepositoryInterface repository) {
+    public Controller(RepositoryInterface repository, ProgramState state) {
         this.repository = repository;
+        this.state = state;
     }
 
     public Map<Integer, Value> unsafeGarbageCollector(List<Integer> symbolTableAddresses, Map<Integer, Value> heap) {
@@ -38,38 +40,19 @@ public class Controller {
                 .collect(Collectors.toList());
     }
 
-    public ProgramState oneStepExecution(ProgramState state) throws GeneralException, IOException {
-        StackInterface<StatementInterface> stack = state.getExecutionStack();
-
-        if (stack.isEmpty())
-            throw new StackException("Can't execute instruction: Program state stack is empty.");
-
-        StatementInterface currentStatement = stack.pop();
-        return currentStatement.execute(state);
-    }
-
     public void completeExecution() throws GeneralException, IOException {
-        ProgramState state = repository.getCurrentProgramState();
         StackInterface<StatementInterface> stack = state.getExecutionStack();
 
-        this.repository.logProgramState();
+        this.repository.logProgramState(state);
         while (!stack.isEmpty()) {
-            state = this.oneStepExecution(state);
-            this.repository.pushFront(state);
+            state = state.oneStepExecution();
+            //this.repository.pushFront(state);
             stack = state.getExecutionStack();
-            this.repository.logProgramState();
+            this.repository.logProgramState(state);
             state.getHeap().setContent(this.unsafeGarbageCollector(this.getAddressesFromSymbolTable(state.getSymbolTable().getContent().values()), state.getHeap().getContent()));
             System.out.println(state.toString());
         }
 
         this.repository.clear();
-    }
-
-    public void addProgramState(ProgramState state) {
-        this.repository.add(state);
-    }
-
-    public ProgramState getCurrentProgramState() throws ListException {
-        return repository.getCurrentProgramState();
     }
 }

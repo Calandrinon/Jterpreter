@@ -1,15 +1,16 @@
 package Repository;
 import Exceptions.GeneralException;
 import Exceptions.ListException;
+import Model.ADT.TheList;
 import Model.ProgramState;
 
 import java.io.IOException;
 
 public interface RepositoryInterface {
     void add(ProgramState state);
-    ProgramState getCurrentProgramState() throws ListException;
-    void logProgramState() throws GeneralException, IOException;
+    void logProgramState(ProgramState state) throws GeneralException, IOException;
     int getSize();
     void clear();
-    void pushFront(ProgramState state);
+    TheList<ProgramState> getProgramList();
+    void setProgramList(TheList<ProgramState> newList);
 }
