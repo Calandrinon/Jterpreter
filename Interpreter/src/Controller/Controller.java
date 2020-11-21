@@ -45,9 +45,7 @@ public class Controller {
 
         this.repository.logProgramState(state);
         while (!stack.isEmpty()) {
-            state = state.oneStepExecution();
-            //this.repository.pushFront(state);
-            stack = state.getExecutionStack();
+            state.oneStepExecution();
             this.repository.logProgramState(state);
             state.getHeap().setContent(this.unsafeGarbageCollector(this.getAddressesFromSymbolTable(state.getSymbolTable().getContent().values()), state.getHeap().getContent()));
             System.out.println(state.toString());

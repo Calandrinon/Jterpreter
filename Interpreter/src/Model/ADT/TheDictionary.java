@@ -37,9 +37,19 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
         return table;
     }
 
+    public void setContent(HashMap<K, V> newTable) {
+        table = newTable;
+    }
+
     @Override
     public boolean isDefined(String id) {
         return table.containsKey(id);
+    }
+
+    public TheDictionary<K, V> clone() {
+        TheDictionary<K, V> clonedDictionary = new TheDictionary<>();
+        clonedDictionary.setContent(table);
+        return clonedDictionary;
     }
 
     public String toString() {

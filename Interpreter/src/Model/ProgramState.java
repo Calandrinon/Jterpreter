@@ -3,6 +3,7 @@ package Model;
 import Exceptions.GeneralException;
 import Exceptions.StackException;
 import Model.ADT.*;
+import Model.Statement.ForkStatement;
 import Model.Statement.StatementInterface;
 import Model.Value.Value;
 
@@ -16,7 +17,8 @@ public class ProgramState {
     private ListInterface<Value> out;
     private HeapInterface heap;
     private StatementInterface originalProgram;
-    private static int id;
+    private static int numberOfIDs = 0;
+    private int id;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
                         DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, ListInterface<Value> out,
@@ -27,6 +29,8 @@ public class ProgramState {
         this.out = out;
         this.originalProgram = (StatementInterface) originalProgram.clone();
         this.heap = heap;
+        numberOfIDs++;
+        this.id = numberOfIDs;
         executionStack.push(originalProgram);
     }
 
@@ -52,11 +56,7 @@ public class ProgramState {
         return currentStatement.execute(this);
     }
 
-    public static synchronized void setId(int new_id) {
-        id = new_id;
-    }
-
-    public static synchronized int getId() {
+    public synchronized int getId() {
         return id;
     }
 
@@ -78,6 +78,10 @@ public class ProgramState {
 
     public ListInterface<Value> getOutput() {
         return out;
+    }
+
+    public StatementInterface getOriginalProgram() {
+        return originalProgram;
     }
 
     public void setExecutionStack(StackInterface<StatementInterface> executionStack) {

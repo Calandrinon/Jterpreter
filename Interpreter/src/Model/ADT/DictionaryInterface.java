@@ -10,5 +10,6 @@ public interface DictionaryInterface<K, V> {
     void remove(K key);
     HashMap<K, V> getContent();
     boolean isDefined(String id);
+    DictionaryInterface<K, V> clone();
     String toString();
 }
