@@ -25,7 +25,7 @@ public class VariableDeclarationStatement implements StatementInterface {
         DictionaryInterface<String, Value> table = state.getSymbolTable();
         table.put(name, this.type.defaultValue());
         state.setSymbolTable(table);
-        return state;
+        return null;
     }
 
     public String toString() {

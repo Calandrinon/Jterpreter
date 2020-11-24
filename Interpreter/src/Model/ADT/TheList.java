@@ -1,9 +1,11 @@
 package Model.ADT;
 import Exceptions.ListException;
 import Model.ADT.ListInterface;
+import Model.ProgramState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class TheList<T> implements ListInterface<T> {
     private List<T> list;
@@ -15,6 +17,11 @@ public class TheList<T> implements ListInterface<T> {
     @Override
     public void add(T element) {
         list.add(element);
+    }
+
+    @Override
+    public void addAll(List<T> list) {
+        this.list.addAll(list);
     }
 
     @Override
@@ -39,6 +46,14 @@ public class TheList<T> implements ListInterface<T> {
         list.set(index, element);
     }
 
+    public void setContainer(List<T> newContainer) {
+        this.list = newContainer;
+    }
+
+    public List<T> getContainer() {
+        return list;
+    }
+
     public String toString() {
         String text = "";
 
@@ -48,6 +63,10 @@ public class TheList<T> implements ListInterface<T> {
         }
 
         return text;
+    }
+
+    public Stream<T> stream() {
+        return list.stream();
     }
 
     public int size() {

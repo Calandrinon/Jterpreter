@@ -147,7 +147,7 @@ public class Main {
                                         )))));
 
         ProgramState state6 = new ProgramState(executionStack6, symbolTable6, fileTable6, heap6, output6, statement6);
-        RepositoryInterface repository6 = new Repository("log7.txt");
+        RepositoryInterface repository6 = new Repository("log6.txt");
         Controller controller6 = new Controller(repository6, state6);
         ///--------------------------------------------------------------------------------------------
         StackInterface<StatementInterface> executionStack7 = new TheStack<StatementInterface>();
@@ -234,10 +234,48 @@ public class Main {
                                 new PrintStatement(new VariableExpression("v")))));
 
         ProgramState state10 = new ProgramState(executionStack10, symbolTable10, fileTable10, heap10, output10, statement10);
-        RepositoryInterface repository10 = new Repository("whilestatementest.txt");
+        RepositoryInterface repository10 = new Repository("log10.txt");
         Controller controller10 = new Controller(repository10, state10);
         ///--------------------------------------------------------------------------------------------
+        StackInterface<StatementInterface> executionStack11 = new TheStack<StatementInterface>();
+        DictionaryInterface<String, Value> symbolTable11 = new TheDictionary<String, Value>();
+        DictionaryInterface<String, BufferedReader> fileTable11 = new TheDictionary<String, BufferedReader>();
+        ListInterface<Value> output11 = new TheList<Value>();
+        HeapInterface heap11 = new Heap();
 
+        CompoundStatement statement11 = new CompoundStatement(
+        new VariableDeclarationStatement("v", new IntType()),
+        new CompoundStatement(
+        new VariableDeclarationStatement("a", new RefType(new IntType())),
+        new CompoundStatement(
+        new AssignmentStatement("v", new ValueExpression(new IntValue(10))),
+        new CompoundStatement(
+        new AssignmentStatement("v", new ValueExpression(new IntValue(10))),
+        new CompoundStatement(
+        new HeapAllocationStatement(new VariableExpression("a"), new ValueExpression(new IntValue(22))),
+        new CompoundStatement(
+        new ForkStatement(new CompoundStatement(
+        new HeapWriteStatement(new VariableExpression("a"), new ValueExpression(new IntValue(30))),
+        new CompoundStatement(
+        new AssignmentStatement("v", new ValueExpression(new IntValue(32))),
+        new CompoundStatement(
+        new PrintStatement(new VariableExpression("v")),
+        new PrintStatement(new HeapReadExpression(new VariableExpression("a")))
+        )
+        )
+        )),
+        new CompoundStatement(
+        new PrintStatement(new VariableExpression("v")),
+        new PrintStatement(new HeapReadExpression(new VariableExpression("a")))
+        )
+        )
+        )
+        ))));
+
+        ProgramState state11 = new ProgramState(executionStack11, symbolTable11, fileTable11, heap11, output11, statement11);
+        RepositoryInterface repository11 = new Repository("log11.txt");
+        Controller controller11 = new Controller(repository11, state11);
+        ///-------------------------------------------------------------------------------------------------------------
 
         TextMenu textMenu = new TextMenu();
         textMenu.addCommand(new ExitCommand("0", "exit"));
@@ -251,6 +289,7 @@ public class Main {
         textMenu.addCommand(new RunExample("8", statement8.toString(), controller8));
         textMenu.addCommand(new RunExample("9", statement9.toString(), controller9));
         textMenu.addCommand(new RunExample("10", statement10.toString(), controller10));
+        textMenu.addCommand(new RunExample("11", statement11.toString(), controller11));
         textMenu.show();
     }
 }

@@ -39,7 +39,7 @@ public class CloseFileStatement implements StatementInterface {
         fileTable.remove(fileName.getValue());
 
         state.setFileTable(fileTable);
-        return state;
+        return null;
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class Repository implements RepositoryInterface {
     private TheList<ProgramState> container;
@@ -38,19 +39,19 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void setProgramList(TheList<ProgramState> newList) {
-        container = newList;
+    public void setProgramList(List<ProgramState> newList) {
+        container.setContainer(newList);
     }
 
     @Override
-    public void logProgramState(ProgramState state) throws GeneralException, IOException {
+    public void logProgramState(ProgramState state) {
         try {
             PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
             logFile.println("ProgramState ID: " + state.getId());
             logFile.println(state.toString());
             logFile.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.toString());
         }
     }
 

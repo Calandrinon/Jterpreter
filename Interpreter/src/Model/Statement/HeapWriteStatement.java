@@ -50,7 +50,7 @@ public class HeapWriteStatement implements StatementInterface {
             throw new UndefinedSymbolException("The variable given as an argument to the HeapWrite statement hasn't been declared.");
         }
 
-        return state;
+        return null;
     }
 
     @Override

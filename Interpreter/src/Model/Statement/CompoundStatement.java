@@ -22,7 +22,7 @@ public class CompoundStatement implements StatementInterface {
         stack.push(second);
         stack.push(first);
 
-        return state;
+        return null;
     }
 
     public String toString() {

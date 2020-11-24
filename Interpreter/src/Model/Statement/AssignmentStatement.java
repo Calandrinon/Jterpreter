@@ -53,6 +53,6 @@ public class AssignmentStatement implements StatementInterface {
             throw new UndefinedSymbolException("The variable " + id + " hasn't been declared.");
         }
 
-        return state;
+        return null;
     }
 }

@@ -44,6 +44,6 @@ public class IfStatement implements StatementInterface {
             throw new GeneralException("The evaluated expression should return a boolean value.");
         }
 
-        return state;
+        return null;
     }
 }

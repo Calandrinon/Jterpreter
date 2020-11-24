@@ -55,7 +55,7 @@ public class ReadFileStatement implements StatementInterface {
 
         symbolTable.put(variableName, intValue);
         state.setSymbolTable(symbolTable);
-        return state;
+        return null;
     }
 
     @Override

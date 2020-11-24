@@ -17,8 +17,9 @@ public class ProgramState {
     private ListInterface<Value> out;
     private HeapInterface heap;
     private StatementInterface originalProgram;
+    private static Object lockForIDs = new Object();
     private static int numberOfIDs = 0;
-    private int id;
+    private int id = 0;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
                         DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, ListInterface<Value> out,
@@ -27,10 +28,14 @@ public class ProgramState {
         this.symbolTable = symbolTable;
         this.fileTable = fileTable;
         this.out = out;
-        this.originalProgram = (StatementInterface) originalProgram.clone();
+        this.originalProgram = originalProgram;
         this.heap = heap;
-        numberOfIDs++;
-        this.id = numberOfIDs;
+
+        synchronized (lockForIDs) {
+            numberOfIDs++;
+            this.id = numberOfIDs;
+        }
+
         executionStack.push(originalProgram);
     }
 
@@ -49,14 +54,15 @@ public class ProgramState {
     }
 
     public ProgramState oneStepExecution() throws GeneralException, IOException {
-        if (executionStack.isEmpty())
+        if (executionStack.isEmpty()) {
             throw new StackException("Can't execute instruction: Program state stack is empty.");
+        }
 
         StatementInterface currentStatement = executionStack.pop();
         return currentStatement.execute(this);
     }
 
-    public synchronized int getId() {
+    public int getId() {
         return id;
     }
 

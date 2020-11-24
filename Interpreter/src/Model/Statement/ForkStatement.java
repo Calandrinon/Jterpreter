@@ -18,17 +18,19 @@ public class ForkStatement implements StatementInterface {
 
     @Override
     public ProgramState execute(ProgramState state) throws GeneralException, IOException {
-        TheStack<StatementInterface> clonedStateStack = new TheStack<>();
-        clonedStateStack.push(statement);
+        TheStack<StatementInterface> newStack = new TheStack<>();
         DictionaryInterface<String, Value> clonedSymbolTable = state.getSymbolTable().clone();
 
-        ProgramState clonedState = new ProgramState(clonedStateStack, clonedSymbolTable, state.getFileTable(),
-                state.getHeap(), state.getOutput(), state.getOriginalProgram());
-        return clonedState;
+        return new ProgramState(newStack, clonedSymbolTable, state.getFileTable(),
+                state.getHeap(), state.getOutput(), statement);
     }
 
     @Override
     public StatementInterface clone() {
         return new ForkStatement(statement);
+    }
+
+    public String toString() {
+        return "fork(" + statement.toString() + ")";
     }
 }

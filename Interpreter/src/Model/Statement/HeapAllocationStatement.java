@@ -68,7 +68,7 @@ public class HeapAllocationStatement implements StatementInterface {
         symbolTable.put(variableName, refValue);
         state.setSymbolTable(symbolTable);
 
-        return state;
+        return null;
     }
 
     @Override

@@ -26,6 +26,6 @@ public class PrintStatement implements StatementInterface {
         ListInterface<Value> outputAsList = state.getOutput();
         outputAsList.add(expression.evaluate(state.getSymbolTable(), state.getHeap()));
         state.setOutput(outputAsList);
-        return state;
+        return null;
     }
 }

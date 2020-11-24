@@ -39,7 +39,7 @@ public class WhileStatement implements StatementInterface {
             state.setExecutionStack(stack);
         }
 
-        return state;
+        return null;
     }
 
     @Override

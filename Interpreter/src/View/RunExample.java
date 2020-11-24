@@ -15,7 +15,7 @@ public class RunExample extends Command {
     public void execute() {
         try {
             controller.completeExecution();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

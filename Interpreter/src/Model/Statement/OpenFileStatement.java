@@ -46,7 +46,7 @@ public class OpenFileStatement implements StatementInterface {
         }
 
         state.setFileTable(fileTable);
-        return state;
+        return null;
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class WhileStatementTest {
     @Test
-    void testWhileStatement() throws IOException {
+    void testWhileStatement() throws IOException, InterruptedException {
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();

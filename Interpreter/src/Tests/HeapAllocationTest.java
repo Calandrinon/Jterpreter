@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class HeapAllocationTest  {
     @Test
-    public void testSymbolTableAndHeapStructureAfterExecution() throws IOException {
+    public void testSymbolTableAndHeapStructureAfterExecution() throws IOException, InterruptedException {
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
@@ -51,7 +51,7 @@ public class HeapAllocationTest  {
     }
 
     @Test
-    public void testHeapRead() throws IOException {
+    public void testHeapRead() throws IOException, InterruptedException {
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
@@ -74,7 +74,7 @@ public class HeapAllocationTest  {
     }
 
     @Test
-    public void testHeapWrite() throws IOException {
+    public void testHeapWrite() throws IOException, InterruptedException {
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
@@ -101,7 +101,7 @@ public class HeapAllocationTest  {
     }
 
     @Test
-    public void testGarbageCollection() throws IOException {
+    public void testGarbageCollection() throws IOException, InterruptedException {
         StackInterface<StatementInterface> executionStack = new TheStack<StatementInterface>();
         DictionaryInterface<String, Value> symbolTable = new TheDictionary<String, Value>();
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();

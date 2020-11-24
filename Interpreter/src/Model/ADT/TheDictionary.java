@@ -48,7 +48,7 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
 
     public TheDictionary<K, V> clone() {
         TheDictionary<K, V> clonedDictionary = new TheDictionary<>();
-        clonedDictionary.setContent(table);
+        clonedDictionary.setContent((HashMap<K, V>) table.clone());
         return clonedDictionary;
     }
 
