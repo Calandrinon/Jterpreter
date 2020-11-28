@@ -4,13 +4,13 @@ import Model.Value.RefValue;
 import Model.Value.Value;
 
 public class RefType implements Type {
-    Type referredType;
+    private Type referredType;
 
     public RefType(Type referredType) {
         this.referredType = referredType;
     }
 
-    Type getReferredType() {
+    public Type getReferredType() {
         return referredType;
     }
 

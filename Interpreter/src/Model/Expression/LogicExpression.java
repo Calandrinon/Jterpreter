@@ -2,6 +2,7 @@ package Model.Expression;
 
 import Exceptions.GeneralException;
 import Exceptions.LogicException;
+import Exceptions.TypeException;
 import Model.ADT.HeapInterface;
 import Model.Type.BoolType;
 import Model.Type.IntType;
@@ -16,7 +17,7 @@ public class LogicExpression extends GeneralExpression {
     private String operation;
 
     public LogicExpression(GeneralExpression first_expression, String operation, GeneralExpression second_expression) {
-        String[] allowed_operators = new String[]{"&&", "||", "==", "!=", "<", ">", "<=", ">="};
+        String[] allowed_operators = new String[]{"&&", "||"};
         boolean is_operator_valid = false;
 
         for (String operator: allowed_operators) {
@@ -35,51 +36,37 @@ public class LogicExpression extends GeneralExpression {
         this.second_expression = second_expression;
     }
 
-    private void checkTypeEquality(DictionaryInterface<String, Value> table, HeapInterface heap, Type type) throws LogicException {
-        Value first_expression_result = first_expression.evaluate(table, heap);
-        Value second_expression_result = second_expression.evaluate(table, heap);
-
-        if (!(first_expression_result.getType().equals(type) && second_expression_result.getType().equals(type)))
-            throw new LogicException("The result of one of the contained expressions is not an instance of the" + type.toString() + " class.");
-    }
-
     @Override
     public Value evaluate(DictionaryInterface<String, Value> table, HeapInterface heap) throws GeneralException {
         Value first_expression_result = first_expression.evaluate(table, heap);
         Value second_expression_result = second_expression.evaluate(table, heap);
 
         switch (operation) {
-            case "&&":
-                this.checkTypeEquality(table, heap, new BoolType());
+            case "&&" -> {
                 return new BoolValue(((BoolValue) first_expression_result).getValue()
                         && ((BoolValue) second_expression_result).getValue());
-            case "||":
-                this.checkTypeEquality(table, heap, new BoolType());
+            }
+            case "||" -> {
                 return new BoolValue(((BoolValue) first_expression_result).getValue()
                         || ((BoolValue) second_expression_result).getValue());
-            case "==":
-                return new BoolValue(first_expression_result.equals(second_expression_result));
-            case "!=":
-                return new BoolValue(!first_expression_result.equals(second_expression_result));
-            case "<":
-                this.checkTypeEquality(table, heap, new IntType());
-                return new BoolValue(((IntValue) first_expression_result).getValue()
-                        < ((IntValue) second_expression_result).getValue());
-            case "<=":
-                this.checkTypeEquality(table, heap, new IntType());
-                return new BoolValue(((IntValue) first_expression_result).getValue()
-                        <= ((IntValue) second_expression_result).getValue());
-            case ">":
-                this.checkTypeEquality(table, heap, new IntType());
-                return new BoolValue(((IntValue) first_expression_result).getValue()
-                        > ((IntValue) second_expression_result).getValue());
-            case ">=":
-                this.checkTypeEquality(table, heap, new IntType());
-                return new BoolValue(((IntValue) first_expression_result).getValue()
-                        >= ((IntValue) second_expression_result).getValue());
+            }
         }
 
         throw new LogicException("Unrecognized operator in expression.");
+    }
+
+    public Type typecheck(DictionaryInterface<String, Type> typeEnvironment) throws TypeException {
+        Type first_type, second_type;
+        first_type = first_expression.typecheck(typeEnvironment);
+        second_type = second_expression.typecheck(typeEnvironment);
+
+        if (!first_type.equals(new BoolType()))
+            throw new TypeException("The first operand is not a boolean value.");
+
+        if (!second_type.equals(new BoolType()))
+            throw new TypeException("The second operand is not a boolean value.");
+
+        return new BoolType();
     }
 
     public String toString() {

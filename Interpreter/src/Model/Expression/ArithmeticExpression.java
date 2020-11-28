@@ -2,9 +2,11 @@ package Model.Expression;
 
 import Exceptions.ArithmeticException;
 import Exceptions.GeneralException;
+import Exceptions.TypeException;
 import Model.ADT.DictionaryInterface;
 import Model.ADT.HeapInterface;
 import Model.Type.IntType;
+import Model.Type.Type;
 import Model.Value.IntValue;
 import Model.Value.Value;
 
@@ -73,6 +75,20 @@ public class ArithmeticExpression extends GeneralExpression {
         }
 
         return null;
+    }
+
+    public Type typecheck(DictionaryInterface<String, Type> typeEnvironment) throws TypeException {
+        Type first_type, second_type;
+        first_type = first_expression.typecheck(typeEnvironment);
+        second_type = second_expression.typecheck(typeEnvironment);
+
+        if (!first_type.equals(new IntType()))
+            throw new TypeException("The first operand is not an integer.");
+
+        if (!second_type.equals(new IntType()))
+            throw new TypeException("The second operand is not an integer.");
+
+        return new IntType();
     }
 
     public String toString() {

@@ -2,9 +2,12 @@ package Model.Expression;
 
 import Exceptions.GeneralException;
 import Exceptions.HeapException;
+import Exceptions.TypeException;
 import Model.ADT.DictionaryInterface;
 import Model.ADT.HeapInterface;
+import Model.Type.IntType;
 import Model.Type.RefType;
+import Model.Type.Type;
 import Model.Value.IntValue;
 import Model.Value.RefValue;
 import Model.Value.Value;
@@ -29,6 +32,15 @@ public class HeapReadExpression extends GeneralExpression {
             throw new HeapException("The address is not a valid key in the heap table.");
 
         return heap.lookup(refAddress);
+    }
+
+    public Type typecheck(DictionaryInterface<String, Type> typeEnvironment) throws TypeException {
+        Type type = expression.typecheck(typeEnvironment);
+        if (!(type instanceof RefType))
+            throw new HeapException("The argument of the heapReadExpression is not a RefType.");
+
+        RefType refType = (RefType)type;
+        return refType.getReferredType();
     }
 
     public String toString() {
