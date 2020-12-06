@@ -8,6 +8,7 @@ import Model.ADT.StackInterface;
 import Model.Expression.GeneralExpression;
 import Model.ProgramState;
 import Model.Type.BoolType;
+import Model.Type.Type;
 import Model.Value.BoolValue;
 import Model.Value.Value;
 
@@ -45,6 +46,15 @@ public class WhileStatement implements StatementInterface {
     @Override
     public StatementInterface clone() {
         return new WhileStatement(expression, statement);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        Type expressionType = expression.typecheck(typeEnvironment);
+        if (!expressionType.equals(new BoolType()))
+            throw new GeneralException("The expression of the while statement should be a LogicExpression or a RelationalExpression");
+
+        return statement.typecheck(typeEnvironment);
     }
 
     public String toString() {

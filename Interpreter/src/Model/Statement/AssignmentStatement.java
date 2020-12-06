@@ -36,6 +36,17 @@ public class AssignmentStatement implements StatementInterface {
     }
 
     @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        Type variableType = typeEnvironment.lookup(id);
+        Type expressionType = expression.typecheck(typeEnvironment);
+
+        if (variableType.equals(expressionType))
+            return typeEnvironment;
+        else
+            throw new GeneralException("The left-hand side and right-hand side of the AssignmentStatement have different types.");
+    }
+
+    @Override
     public ProgramState execute(ProgramState state) throws GeneralException {
         StackInterface<StatementInterface> stack = state.getExecutionStack();
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();

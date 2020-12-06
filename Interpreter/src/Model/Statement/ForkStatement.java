@@ -5,6 +5,7 @@ import Model.ADT.DictionaryInterface;
 import Model.ADT.TheDictionary;
 import Model.ADT.TheStack;
 import Model.ProgramState;
+import Model.Type.Type;
 import Model.Value.Value;
 
 import java.io.IOException;
@@ -28,6 +29,11 @@ public class ForkStatement implements StatementInterface {
     @Override
     public StatementInterface clone() {
         return new ForkStatement(statement);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        return statement.typecheck(typeEnvironment);
     }
 
     public String toString() {

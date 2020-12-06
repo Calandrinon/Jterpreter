@@ -76,6 +76,11 @@ public class HeapAllocationStatement implements StatementInterface {
         return new HeapAllocationStatement(variableExpression, expression);
     }
 
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        return null;
+    }
+
     public String toString() {
         return "new(" + variableExpression.getId() + "," + expression.toString() + ")";
     }

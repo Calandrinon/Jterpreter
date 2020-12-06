@@ -2,9 +2,11 @@ package Model.Statement;
 
 import Exceptions.GeneralException;
 import Model.*;
+import Model.ADT.DictionaryInterface;
 import Model.ADT.StackInterface;
 import Model.Expression.GeneralExpression;
 import Model.Type.BoolType;
+import Model.Type.Type;
 import Model.Value.BoolValue;
 import Model.Value.Value;
 
@@ -24,6 +26,18 @@ public class IfStatement implements StatementInterface {
 
     public IfStatement clone() {
         return new IfStatement(this.expression, this.thenStatement, this.elseStatement);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        Type expressionType = expression.typecheck(typeEnvironment);
+        if (!expressionType.equals(new BoolType()))
+            throw new GeneralException("The expression of the if statement does not evaluate to a boolean type.");
+
+        thenStatement.typecheck(typeEnvironment.clone());
+        elseStatement.typecheck(typeEnvironment.clone());
+
+        return typeEnvironment;
     }
 
     @Override

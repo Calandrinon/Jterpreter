@@ -5,6 +5,7 @@ import Exceptions.StackException;
 import Model.ADT.*;
 import Model.Statement.ForkStatement;
 import Model.Statement.StatementInterface;
+import Model.Type.Type;
 import Model.Value.Value;
 
 import java.io.BufferedReader;
@@ -30,6 +31,9 @@ public class ProgramState {
         this.out = out;
         this.originalProgram = originalProgram;
         this.heap = heap;
+
+        DictionaryInterface<String, Type> typeEnvironment = new TheDictionary<>();
+        this.originalProgram.typecheck(typeEnvironment);
 
         synchronized (lockForIDs) {
             numberOfIDs++;

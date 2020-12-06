@@ -10,6 +10,7 @@ import Model.Expression.VariableExpression;
 import Model.ProgramState;
 import Model.Type.IntType;
 import Model.Type.StringType;
+import Model.Type.Type;
 import Model.Value.IntValue;
 import Model.Value.StringValue;
 import Model.Value.Value;
@@ -61,6 +62,15 @@ public class ReadFileStatement implements StatementInterface {
     @Override
     public ReadFileStatement clone() {
         return new ReadFileStatement(this.expression, this.resultContainerVariable);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        Type filenameType = expression.typecheck(typeEnvironment);
+        if (!filenameType.equals(new StringType()))
+            throw new FileException("The expression representing the name of the file to be read must be a string.");
+
+        return typeEnvironment;
     }
 
     public String toString() {

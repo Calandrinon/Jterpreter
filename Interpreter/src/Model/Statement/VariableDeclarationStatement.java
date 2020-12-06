@@ -21,6 +21,12 @@ public class VariableDeclarationStatement implements StatementInterface {
     }
 
     @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        typeEnvironment.put(name, type);
+        return typeEnvironment;
+    }
+
+    @Override
     public ProgramState execute(ProgramState state) throws GeneralException {
         DictionaryInterface<String, Value> table = state.getSymbolTable();
         table.put(name, this.type.defaultValue());

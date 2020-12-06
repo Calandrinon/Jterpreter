@@ -1,9 +1,11 @@
 package Model.Statement;
 
 import Exceptions.GeneralException;
+import Model.ADT.DictionaryInterface;
 import Model.Expression.GeneralExpression;
 import Model.ADT.ListInterface;
 import Model.ProgramState;
+import Model.Type.Type;
 import Model.Value.Value;
 
 public class PrintStatement implements StatementInterface {
@@ -19,6 +21,12 @@ public class PrintStatement implements StatementInterface {
 
     public PrintStatement clone() {
         return new PrintStatement(this.expression);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        expression.typecheck(typeEnvironment);
+        return typeEnvironment;
     }
 
     @Override

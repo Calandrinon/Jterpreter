@@ -1,6 +1,8 @@
 package Model.Statement;
 import Exceptions.GeneralException;
+import Model.ADT.DictionaryInterface;
 import Model.ProgramState;
+import Model.Type.Type;
 
 public class NopStatement implements StatementInterface {
     private ProgramState state;
@@ -17,6 +19,11 @@ public class NopStatement implements StatementInterface {
     @Override
     public StatementInterface clone() {
         return new NopStatement(state);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        return null;
     }
 
     public String toString() {

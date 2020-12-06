@@ -30,7 +30,6 @@ public class HeapWriteStatement implements StatementInterface {
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();
         Heap heap = (Heap)state.getHeap();
 
-
         try {
             Value variable = variableExpression.evaluate(symbolTable, heap);
             if (!(variable.getType() instanceof RefType))
@@ -56,6 +55,11 @@ public class HeapWriteStatement implements StatementInterface {
     @Override
     public StatementInterface clone() {
         return new HeapWriteStatement(variableExpression, expression);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        return null;
     }
 
     public String toString() {
