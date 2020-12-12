@@ -20,11 +20,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HeapAllocationStatement implements StatementInterface {
-    private VariableExpression variableExpression;
+    private String variableName;
     private GeneralExpression expression;
 
-    public HeapAllocationStatement(VariableExpression variableExpression, GeneralExpression expression) {
-        this.variableExpression = variableExpression;
+    public HeapAllocationStatement(String variableName, GeneralExpression expression) {
+        this.variableName = variableName;
         this.expression = expression;
     }
 
@@ -32,16 +32,11 @@ public class HeapAllocationStatement implements StatementInterface {
     public ProgramState execute(ProgramState state) throws GeneralException, IOException {
         DictionaryInterface<String, Value> symbolTable = state.getSymbolTable();
         HeapInterface heap = state.getHeap();
-        String variableName = variableExpression.getId();
         Value expressionValue = expression.evaluate(symbolTable, heap);
         Type expressionType = expressionValue.getType();
 
         if (!symbolTable.isDefined(variableName))
             throw new HeapException("Variable \"" + variableName + "\" not found in the symbol table.");
-
-        Value variableValue = variableExpression.evaluate(symbolTable, heap);
-        if (!variableValue.getType().equals(new RefType(expressionType)))
-            throw new HeapException("The variable does not have the type RefType referencing a value of type" + expressionType.toString());
 
         RefValue value = (RefValue)symbolTable.lookup(variableName);
         boolean invalidAddress = false;
@@ -73,15 +68,21 @@ public class HeapAllocationStatement implements StatementInterface {
 
     @Override
     public StatementInterface clone() {
-        return new HeapAllocationStatement(variableExpression, expression);
+        return new HeapAllocationStatement(variableName, expression);
     }
 
     @Override
     public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
-        return null;
+        Type variableType = typeEnvironment.lookup(variableName);
+        Type expressionType = expression.typecheck(typeEnvironment);
+
+        if (!variableType.equals(new RefType(expressionType)))
+            throw new HeapException("The expression type should match the reference type.");
+
+        return typeEnvironment;
     }
 
     public String toString() {
-        return "new(" + variableExpression.getId() + "," + expression.toString() + ")";
+        return "new(" + variableName + "," + expression.toString() + ")";
     }
 }

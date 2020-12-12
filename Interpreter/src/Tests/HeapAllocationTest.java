@@ -32,11 +32,11 @@ public class HeapAllocationTest  {
         CompoundStatement statement = new CompoundStatement(
         new VariableDeclarationStatement("v", new RefType(new IntType())),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
         new CompoundStatement(
         new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+        new HeapAllocationStatement("a", new VariableExpression("v")),
         new CompoundStatement(
         new PrintStatement(new VariableExpression("v")),
         new PrintStatement(new VariableExpression("a"))
@@ -61,7 +61,7 @@ public class HeapAllocationTest  {
         CompoundStatement statement = new CompoundStatement(
         new VariableDeclarationStatement("v", new RefType(new IntType())),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
         new PrintStatement(new HeapReadExpression(new VariableExpression("v")))
         ));
 
@@ -84,11 +84,11 @@ public class HeapAllocationTest  {
         CompoundStatement statement = new CompoundStatement(
         new VariableDeclarationStatement("v", new RefType(new IntType())),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
         new CompoundStatement(
         new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
         new CompoundStatement(
-        new HeapWriteStatement(new VariableExpression("v"), new ValueExpression(new IntValue(30))),
+        new HeapWriteStatement("v", new ValueExpression(new IntValue(30))),
         new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new VariableExpression("v")), new ValueExpression(new IntValue(5))))
         ))));
 
@@ -111,13 +111,13 @@ public class HeapAllocationTest  {
         CompoundStatement statement = new CompoundStatement(
         new VariableDeclarationStatement("v", new RefType(new IntType())),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
         new CompoundStatement(
         new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+        new HeapAllocationStatement("a", new VariableExpression("v")),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(30))),
+        new HeapAllocationStatement("v", new ValueExpression(new IntValue(30))),
         new PrintStatement(new HeapReadExpression(new HeapReadExpression(new VariableExpression("a"))))
         )))));
 

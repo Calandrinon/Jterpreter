@@ -54,7 +54,8 @@ public class WhileStatement implements StatementInterface {
         if (!expressionType.equals(new BoolType()))
             throw new GeneralException("The expression of the while statement should be a LogicExpression or a RelationalExpression");
 
-        return statement.typecheck(typeEnvironment);
+        statement.typecheck(typeEnvironment.clone());
+        return typeEnvironment;
     }
 
     public String toString() {

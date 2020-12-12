@@ -68,19 +68,11 @@ public class RelationalExpression extends GeneralExpression {
         first_type = first_expression.typecheck(typeEnvironment);
         second_type = second_expression.typecheck(typeEnvironment);
 
-        if (!this.operation.equals("==") && !this.operation.equals("!=")) {
-            if (!first_type.equals(new IntType()))
-                throw new LogicException("The first expression should evaluate to an integer.");
+        if (!first_type.equals(new IntType()))
+            throw new LogicException("The expression on the left should evaluate to an integer");
 
-            if (!second_type.equals(new IntType()))
-                throw new LogicException("The second expression should evaluate to an integer.");
-        } else {
-            if (!first_type.equals(new BoolType()))
-                throw new LogicException("The first expression should evaluate to a boolean.");
-
-            if (!second_type.equals(new BoolType()))
-                throw new LogicException("The second expression should evaluate to a boolean.");
-        }
+        if (!second_type.equals(new IntType()))
+            throw new LogicException("The expression on the right should evaluate to an integer");
 
         return new BoolType();
     }

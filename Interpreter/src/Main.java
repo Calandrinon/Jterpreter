@@ -4,10 +4,7 @@ import Model.ADT.*;
 import Model.Expression.*;
 import Model.ProgramState;
 import Model.Statement.*;
-import Model.Type.BoolType;
-import Model.Type.IntType;
-import Model.Type.RefType;
-import Model.Type.StringType;
+import Model.Type.*;
 import Model.Value.BoolValue;
 import Model.Value.IntValue;
 import Model.Value.StringValue;
@@ -29,6 +26,7 @@ public class Main {
                         new AssignmentStatement("v", new ValueExpression(new IntValue(2))),
                         new PrintStatement(new VariableExpression("v")))
         );
+        example1.typecheck(new TheDictionary<>());
 
         ProgramState program1= ProgramState.createNewProgramState(example1);
         RepositoryInterface repository1 = new Repository("log1.txt");
@@ -49,6 +47,7 @@ public class Main {
                         )
                 )
         );
+        example2.typecheck(new TheDictionary<>());
 
         ProgramState program2= ProgramState.createNewProgramState(example2);
         RepositoryInterface repository2 = new Repository("log2.txt");
@@ -59,6 +58,8 @@ public class Main {
                         new CompoundStatement(new IfStatement(new VariableExpression("a"),new AssignmentStatement("v",new ValueExpression(new
                                 IntValue(2))), new AssignmentStatement("v", new ValueExpression(new IntValue(3)))), new PrintStatement(new
                                 VariableExpression("v"))))));
+
+        example3.typecheck(new TheDictionary<>());
 
         ProgramState program3= ProgramState.createNewProgramState(example3);
         RepositoryInterface repository3 = new Repository("log3.txt");
@@ -77,7 +78,7 @@ public class Main {
                                                 new CompoundStatement(
                                                         new AssignmentStatement("c", new ValueExpression(new BoolValue(true))),
                                                         new IfStatement(
-                                                                new LogicExpression(new LogicExpression(new ArithmeticExpression("+", new VariableExpression("a"), new VariableExpression("b")), "==", new ValueExpression(new IntValue(5))), "&&", new VariableExpression("c")),
+                                                                new LogicExpression(new RelationalExpression(new ArithmeticExpression("+", new VariableExpression("a"), new VariableExpression("b")), "==", new ValueExpression(new IntValue(5))), "&&", new VariableExpression("c")),
                                                                 new PrintStatement(new ValueExpression(new IntValue(1))),
                                                                 new PrintStatement(new ValueExpression(new IntValue(0)))
                                                         )
@@ -87,6 +88,7 @@ public class Main {
                         )
                 )
         );
+        example4.typecheck(new TheDictionary<>());
 
         ProgramState program4= ProgramState.createNewProgramState(example4);
         RepositoryInterface repository4 = new Repository("log4.txt");
@@ -106,11 +108,11 @@ public class Main {
                                 new CompoundStatement(
                                         new VariableDeclarationStatement("varc", new IntType()),
                                         new CompoundStatement(
-                                                new ReadFileStatement(new VariableExpression("varf"), new VariableExpression("varc")),
+                                                new ReadFileStatement(new VariableExpression("varf"), "varc"),
                                                 new CompoundStatement(
                                                         new PrintStatement(new VariableExpression("varc")),
                                                         new CompoundStatement(
-                                                                new ReadFileStatement(new VariableExpression("varf"), new VariableExpression("varc")),
+                                                                new ReadFileStatement(new VariableExpression("varf"), "varc"),
                                                                 new CompoundStatement(
                                                                         new PrintStatement(new VariableExpression("varc")),
                                                                         new CloseFileStatement(new VariableExpression("varf"))
@@ -122,6 +124,7 @@ public class Main {
                         )
                 )
         );
+        example5.typecheck(new TheDictionary<>());
 
         ProgramState program5= ProgramState.createNewProgramState(example5);
         RepositoryInterface repository5 = new Repository("log5.txt");
@@ -136,15 +139,17 @@ public class Main {
         CompoundStatement statement6 = new CompoundStatement(
                 new VariableDeclarationStatement("v", new RefType(new IntType())),
                 new CompoundStatement(
-                        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
                         new CompoundStatement(
                                 new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
                                 new CompoundStatement(
-                                        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+                                        new HeapAllocationStatement("a", new VariableExpression("v")),
                                         new CompoundStatement(
                                                 new PrintStatement(new VariableExpression("v")),
                                                 new PrintStatement(new VariableExpression("a"))
                                         )))));
+
+        statement6.typecheck(new TheDictionary<>());
 
         ProgramState state6 = new ProgramState(executionStack6, symbolTable6, fileTable6, heap6, output6, statement6);
         RepositoryInterface repository6 = new Repository("log6.txt");
@@ -159,14 +164,16 @@ public class Main {
         CompoundStatement statement7 = new CompoundStatement(
         new VariableDeclarationStatement("v", new RefType(new IntType())),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
         new CompoundStatement(
         new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+        new HeapAllocationStatement("a", new VariableExpression("v")),
         new CompoundStatement(
         new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
         new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new HeapReadExpression(new VariableExpression("a"))), new ValueExpression(new IntValue(5)))))))));
+
+        statement7.typecheck(new TheDictionary<>());
 
         ProgramState state7 = new ProgramState(executionStack7, symbolTable7, fileTable7, heap7, output7, statement7);
         RepositoryInterface repository7 = new Repository("log7.txt");
@@ -181,13 +188,14 @@ public class Main {
         CompoundStatement statement8 = new CompoundStatement(
                 new VariableDeclarationStatement("v", new RefType(new IntType())),
                 new CompoundStatement(
-                        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
                         new CompoundStatement(
                                 new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
                                 new CompoundStatement(
-                                        new HeapWriteStatement(new VariableExpression("v"), new ValueExpression(new IntValue(30))),
+                                        new HeapWriteStatement("v", new ValueExpression(new IntValue(30))),
                                         new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new VariableExpression("v")), new ValueExpression(new IntValue(5))))
                                 ))));
+        statement8.typecheck(new TheDictionary<>());
 
         ProgramState state8 = new ProgramState(executionStack8, symbolTable8, fileTable8, heap8, output8, statement8);
         RepositoryInterface repository8 = new Repository("log8.txt");
@@ -202,15 +210,17 @@ public class Main {
         CompoundStatement statement9 = new CompoundStatement(
                 new VariableDeclarationStatement("v", new RefType(new IntType())),
                 new CompoundStatement(
-                        new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(20))),
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
                         new CompoundStatement(
                                 new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
                                 new CompoundStatement(
-                                        new HeapAllocationStatement(new VariableExpression("a"), new VariableExpression("v")),
+                                        new HeapAllocationStatement("a", new VariableExpression("v")),
                                         new CompoundStatement(
-                                                new HeapAllocationStatement(new VariableExpression("v"), new ValueExpression(new IntValue(30))),
+                                                new HeapAllocationStatement("v", new ValueExpression(new IntValue(30))),
                                                 new PrintStatement(new HeapReadExpression(new HeapReadExpression(new VariableExpression("a"))))
                                         )))));
+
+        statement9.typecheck(new TheDictionary<>());
 
         ProgramState state9 = new ProgramState(executionStack9, symbolTable9, fileTable9, heap9, output9, statement9);
         RepositoryInterface repository9 = new Repository("log9.txt");
@@ -227,11 +237,12 @@ public class Main {
                 new CompoundStatement(
                         new AssignmentStatement("v", new ValueExpression(new IntValue(4))),
                         new CompoundStatement(
-                                new WhileStatement(new LogicExpression(new VariableExpression("v"), ">", new ValueExpression(new IntValue(0))),
+                                new WhileStatement(new RelationalExpression(new VariableExpression("v"), ">", new ValueExpression(new IntValue(0))),
                                         new CompoundStatement(
                                                 new PrintStatement(new VariableExpression("v")),
                                                 new AssignmentStatement("v", new ArithmeticExpression("-", new VariableExpression("v"), new ValueExpression(new IntValue(1)))))),
                                 new PrintStatement(new VariableExpression("v")))));
+        statement10.typecheck(new TheDictionary<>());
 
         ProgramState state10 = new ProgramState(executionStack10, symbolTable10, fileTable10, heap10, output10, statement10);
         RepositoryInterface repository10 = new Repository("log10.txt");
@@ -252,10 +263,10 @@ public class Main {
         new CompoundStatement(
         new AssignmentStatement("v", new ValueExpression(new IntValue(10))),
         new CompoundStatement(
-        new HeapAllocationStatement(new VariableExpression("a"), new ValueExpression(new IntValue(22))),
+        new HeapAllocationStatement("a", new ValueExpression(new IntValue(22))),
         new CompoundStatement(
         new ForkStatement(new CompoundStatement(
-        new HeapWriteStatement(new VariableExpression("a"), new ValueExpression(new IntValue(30))),
+        new HeapWriteStatement("a", new ValueExpression(new IntValue(30))),
         new CompoundStatement(
         new AssignmentStatement("v", new ValueExpression(new IntValue(32))),
         new CompoundStatement(
@@ -271,6 +282,8 @@ public class Main {
         )
         )
         ))));
+
+        statement11.typecheck(new TheDictionary<>());
 
         ProgramState state11 = new ProgramState(executionStack11, symbolTable11, fileTable11, heap11, output11, statement11);
         RepositoryInterface repository11 = new Repository("log11.txt");

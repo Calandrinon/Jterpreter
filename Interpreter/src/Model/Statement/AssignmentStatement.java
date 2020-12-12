@@ -40,10 +40,10 @@ public class AssignmentStatement implements StatementInterface {
         Type variableType = typeEnvironment.lookup(id);
         Type expressionType = expression.typecheck(typeEnvironment);
 
-        if (variableType.equals(expressionType))
-            return typeEnvironment;
-        else
+        if (!variableType.equals(expressionType))
             throw new GeneralException("The left-hand side and right-hand side of the AssignmentStatement have different types.");
+
+        return typeEnvironment;
     }
 
     @Override

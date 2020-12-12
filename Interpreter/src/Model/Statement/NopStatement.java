@@ -23,7 +23,7 @@ public class NopStatement implements StatementInterface {
 
     @Override
     public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
-        return null;
+        return typeEnvironment;
     }
 
     public String toString() {

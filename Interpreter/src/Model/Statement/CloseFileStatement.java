@@ -7,6 +7,7 @@ import Model.ADT.HeapInterface;
 import Model.Expression.GeneralExpression;
 import Model.ProgramState;
 import Model.Type.StringType;
+import Model.Type.Type;
 import Model.Value.StringValue;
 import Model.Value.Value;
 
@@ -45,6 +46,16 @@ public class CloseFileStatement implements StatementInterface {
     @Override
     public CloseFileStatement clone() {
         return new CloseFileStatement(this.expression);
+    }
+
+    @Override
+    public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
+        Type expressionType = expression.typecheck(typeEnvironment);
+
+        if (!expressionType.equals(new StringType()))
+            throw new FileException("The parameter of the file-closing statement should be a string.");
+
+        return typeEnvironment;
     }
 
     public String toString() {

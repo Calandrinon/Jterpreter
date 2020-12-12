@@ -32,9 +32,6 @@ public class ProgramState {
         this.originalProgram = originalProgram;
         this.heap = heap;
 
-        DictionaryInterface<String, Type> typeEnvironment = new TheDictionary<>();
-        this.originalProgram.typecheck(typeEnvironment);
-
         synchronized (lockForIDs) {
             numberOfIDs++;
             this.id = numberOfIDs;

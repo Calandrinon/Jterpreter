@@ -33,7 +33,8 @@ public class ForkStatement implements StatementInterface {
 
     @Override
     public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
-        return statement.typecheck(typeEnvironment);
+        statement.typecheck(typeEnvironment.clone());
+        return typeEnvironment;
     }
 
     public String toString() {

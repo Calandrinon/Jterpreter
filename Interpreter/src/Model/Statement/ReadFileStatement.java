@@ -20,11 +20,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ReadFileStatement implements StatementInterface {
-    private GeneralExpression expression, resultContainerVariable;
+    private GeneralExpression expression;
+    private String variableName;
 
-    public ReadFileStatement(GeneralExpression expression, GeneralExpression resultContainerVariable) {
+    public ReadFileStatement(GeneralExpression expression, String variableName) {
         this.expression = expression;
-        this.resultContainerVariable = resultContainerVariable;
+        this.variableName = variableName;
     }
 
     @Override
@@ -33,8 +34,7 @@ public class ReadFileStatement implements StatementInterface {
         HeapInterface heap = state.getHeap();
         DictionaryInterface<String, BufferedReader> fileTable = state.getFileTable();
         Value value = expression.evaluate(symbolTable, heap);
-        Value variable = resultContainerVariable.evaluate(symbolTable, heap);
-        String variableName = ((VariableExpression)resultContainerVariable).getId();
+        Value variable = symbolTable.lookup(variableName);
 
         if (!(symbolTable.isDefined(variableName) && symbolTable.lookup(variableName).getType().equals(new IntType())))
             throw new UndefinedSymbolException("The given variable \"" + variableName + "\" hasn't been defined.");
@@ -61,19 +61,24 @@ public class ReadFileStatement implements StatementInterface {
 
     @Override
     public ReadFileStatement clone() {
-        return new ReadFileStatement(this.expression, this.resultContainerVariable);
+        return new ReadFileStatement(this.expression, this.variableName);
     }
 
     @Override
     public DictionaryInterface<String, Type> typecheck(DictionaryInterface<String, Type> typeEnvironment) throws GeneralException {
-        Type filenameType = expression.typecheck(typeEnvironment);
-        if (!filenameType.equals(new StringType()))
-            throw new FileException("The expression representing the name of the file to be read must be a string.");
+        Type variableType = typeEnvironment.lookup(variableName);
+        Type expressionType = expression.typecheck(typeEnvironment);
+
+        if (!expressionType.equals(new StringType()))
+            throw new FileException("The type of the given expression should be a string.");
+
+        if (!variableType.equals(new IntType()))
+            throw new FileException("The given variable should be an integer.");
 
         return typeEnvironment;
     }
 
     public String toString() {
-        return "ReadFile(" + this.expression.toString()  + ", " + this.resultContainerVariable.toString() + ")";
+        return "ReadFile(" + this.expression.toString()  + ", " + this.variableName + ")";
     }
 }
