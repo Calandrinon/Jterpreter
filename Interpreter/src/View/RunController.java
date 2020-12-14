@@ -1,16 +1,15 @@
 package View;
 
 import javafx.application.Application;
+import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class RunController extends Application {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+public class RunController implements Initializable {
     @Override
-    public void start(Stage primaryStage) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 }
