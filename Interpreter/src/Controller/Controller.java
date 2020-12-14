@@ -98,4 +98,8 @@ public class Controller {
 
         repository.setProgramList(list);
     }
+
+    public String toString() {
+        return state.getOriginalProgram().toString();
+    }
 }
