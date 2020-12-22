@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Exceptions.GeneralException;
 import Model.ADT.*;
 import Model.Expression.*;
 import Model.ProgramState;
@@ -17,6 +18,8 @@ import Repository.Repository;
 import Repository.RepositoryInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,16 +31,21 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SelectionController implements Initializable {
     @FXML
     private Repository repository1, repository2, repository3, repository4, repository5, repository6, repository7, repository8, repository9, repository10, repository11;
+    @FXML
     private Controller controller1, controller2, controller3, controller4, controller5, controller6, controller7, controller8, controller9, controller10, controller11;
+    @FXML
     private ProgramState program1, program2, program3, program4, program5, program6, program7, program8, program9, program10, program11;
     @FXML
     private ListView<Controller> programList;
+    @FXML
     private ObservableList<Controller> items = FXCollections.observableArrayList();
+    @FXML
     private Button runButton;
     private StatementInterface statement1, statement2, statement3, statement4, statement5, statement6, statement7, statement8, statement9, statement10, statement11;
 
@@ -45,9 +53,14 @@ public class SelectionController implements Initializable {
         System.out.println("button pressed");
         int index = programList.getSelectionModel().getSelectedIndex();
         System.out.println("Selected index is " + index);
+        System.out.println(items.get(index));
 
+        RunController runController = new RunController(items.get(index));
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("sample2.fxml"));
+        fxmlLoader.setController(runController);
+
         Parent root1 = (Parent) fxmlLoader.load();
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root1));
         stage.show();
@@ -324,6 +337,7 @@ public class SelectionController implements Initializable {
         program11 = new ProgramState(executionStack11, symbolTable11, fileTable11, heap11, output11, statement11);
         repository11 = new Repository("log11.txt");
         controller11 = new Controller(repository11, program11);
+        System.out.println("Statements created.");
     }
 
     @Override
@@ -347,6 +361,7 @@ public class SelectionController implements Initializable {
         items.add(controller11);
 
         programList.setItems(items);
+        System.out.println("Initialized items[]");
     }
 
 }

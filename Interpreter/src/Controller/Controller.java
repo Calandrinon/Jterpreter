@@ -9,6 +9,7 @@ import Model.ADT.StackInterface;
 import Model.Statement.StatementInterface;
 import Model.Value.RefValue;
 import Model.Value.Value;
+import Repository.Repository;
 import Repository.RepositoryInterface;
 
 import java.io.FileNotFoundException;
@@ -101,5 +102,13 @@ public class Controller {
 
     public String toString() {
         return state.getOriginalProgram().toString();
+    }
+
+    public ProgramState getProgramState() {
+        return state;
+    }
+
+    public Repository getRepository() {
+        return (Repository) repository;
     }
 }
