@@ -26,10 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,8 +48,7 @@ public class SelectFormController implements Initializable {
         this.mainWindowController = mainWindowController;
     }
 
-    private void buildProgramStatements()
-    {
+    private void buildProgramStatements() throws IOException {
         /**
         StatementInterface ex1 = new CompoundStatement(new AssignStatement("v", new ConstantExpression(2)),
                 new PrintStatement(new VariableExpression("v")));
@@ -199,6 +195,11 @@ public class SelectFormController implements Initializable {
         );
         example4.typecheck(new TheDictionary<>());
 
+
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("test.in", true)));
+        writer.println("15");
+        writer.println("50");
+        writer.close();
         StatementInterface example5 = new CompoundStatement(
                 new VariableDeclarationStatement("varf", new StringType()),
                 new CompoundStatement(
@@ -336,7 +337,11 @@ public class SelectFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        buildProgramStatements();
+        try {
+            buildProgramStatements();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         programListView.setItems(FXCollections.observableArrayList(getStringRepresentations()));
 
         executeButton.setOnAction(actionEvent -> {

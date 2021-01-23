@@ -27,7 +27,7 @@ public class RunFormController implements Initializable {
     private TableColumn<Map.Entry<Integer, Integer>, Integer> heapAddressColumn;
 
     @FXML
-    private TableColumn<Map.Entry<IntValue, IntValue>, String> heapValueColumn;
+    private TableColumn<Map.Entry<IntValue, Value>, String> heapValueColumn;
 
     @FXML
     private TableView<Map.Entry<Integer, String>> fileTableView;
@@ -87,7 +87,7 @@ public class RunFormController implements Initializable {
         fileNameColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue() + ""));
 
         symbolTableVariableColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey() + ""));
-        symbolTableValueColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString())/*new SimpleIntegerProperty(p.getValue().getValue()).asObject()*/);
+        symbolTableValueColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
 
         programStateListView.setOnMouseClicked(mouseEvent -> { changeProgramState(getCurrentProgramState()); });
 
@@ -142,20 +142,9 @@ public class RunFormController implements Initializable {
     }
 
     private void populateFileTable(ProgramState currentProgramState) {
-        /**
-        DictionaryInterface<Integer, MyFilePair> fileTable = currentProgramState.getFileTable();
-        Map<Integer, String> fileTableMap = new HashMap<>();
-        for (Map.Entry<Integer, MyFilePair> entry : fileTable.getAll())
-            fileTableMap.put(entry.getKey(), entry.getValue().getFileName());
-        
-        List<Map.Entry<Integer, String>> fileTableList = new ArrayList<>(fileTableMap.entrySet());
-        fileTableView.setItems(FXCollections.observableList(fileTableList));
-        fileTableView.refresh();
-         **/
     }
 
     private void populateOutput(ProgramState currentProgramState) {
-        //List<Integer> output = currentProgramState.getOutputList();
         ListInterface<Value> outputInterface = currentProgramState.getOutput();
         TheList<Value> outputList = (TheList<Value>)outputInterface;
         List<Value> output = outputList.getContainer();
