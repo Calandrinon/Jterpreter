@@ -1,11 +1,15 @@
 package View;
 
-import Model.ADT.TheDictionary;
+import Model.ADT.*;
 import Model.Expression.*;
 import Model.Type.BoolType;
 import Model.Type.IntType;
+import Model.Type.RefType;
+import Model.Type.StringType;
 import Model.Value.BoolValue;
 import Model.Value.IntValue;
+import Model.Value.StringValue;
+import Model.Value.Value;
 import Repository.*;
 import Controller.*;
 import Model.ProgramState;
@@ -22,6 +26,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,7 +173,161 @@ public class SelectFormController implements Initializable {
 
         example3.typecheck(new TheDictionary<>());
 
-        programStatements = new ArrayList<>(Arrays.asList(example1, example2, example3));
+
+        StatementInterface example4 = new CompoundStatement(
+                new VariableDeclarationStatement("a", new IntType()),
+                new CompoundStatement(
+                        new VariableDeclarationStatement("b", new IntType()),
+                        new CompoundStatement(
+                                new VariableDeclarationStatement("c", new BoolType()),
+                                new CompoundStatement(
+                                        new AssignmentStatement("a", new ValueExpression(new IntValue(2))),
+                                        new CompoundStatement(
+                                                new AssignmentStatement("b", new ValueExpression(new IntValue(3))),
+                                                new CompoundStatement(
+                                                        new AssignmentStatement("c", new ValueExpression(new BoolValue(true))),
+                                                        new IfStatement(
+                                                                new LogicExpression(new RelationalExpression(new ArithmeticExpression("+", new VariableExpression("a"), new VariableExpression("b")), "==", new ValueExpression(new IntValue(5))), "&&", new VariableExpression("c")),
+                                                                new PrintStatement(new ValueExpression(new IntValue(1))),
+                                                                new PrintStatement(new ValueExpression(new IntValue(0)))
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+        example4.typecheck(new TheDictionary<>());
+
+        StatementInterface example5 = new CompoundStatement(
+                new VariableDeclarationStatement("varf", new StringType()),
+                new CompoundStatement(
+                        new AssignmentStatement("varf", new ValueExpression(new StringValue("test.in"))),
+                        new CompoundStatement(
+                                new OpenFileStatement(new VariableExpression("varf")),
+                                new CompoundStatement(
+                                        new VariableDeclarationStatement("varc", new IntType()),
+                                        new CompoundStatement(
+                                                new ReadFileStatement(new VariableExpression("varf"), "varc"),
+                                                new CompoundStatement(
+                                                        new PrintStatement(new VariableExpression("varc")),
+                                                        new CompoundStatement(
+                                                                new ReadFileStatement(new VariableExpression("varf"), "varc"),
+                                                                new CompoundStatement(
+                                                                        new PrintStatement(new VariableExpression("varc")),
+                                                                        new CloseFileStatement(new VariableExpression("varf"))
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+        example5.typecheck(new TheDictionary<>());
+
+
+        CompoundStatement statement6 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new RefType(new IntType())),
+                new CompoundStatement(
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(
+                                new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
+                                new CompoundStatement(
+                                        new HeapAllocationStatement("a", new VariableExpression("v")),
+                                        new CompoundStatement(
+                                                new PrintStatement(new VariableExpression("v")),
+                                                new PrintStatement(new VariableExpression("a"))
+                                        )))));
+
+        statement6.typecheck(new TheDictionary<>());
+
+        CompoundStatement statement7 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new RefType(new IntType())),
+                new CompoundStatement(
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(
+                                new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
+                                new CompoundStatement(
+                                        new HeapAllocationStatement("a", new VariableExpression("v")),
+                                        new CompoundStatement(
+                                                new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
+                                                new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new HeapReadExpression(new VariableExpression("a"))), new ValueExpression(new IntValue(5)))))))));
+
+        statement7.typecheck(new TheDictionary<>());
+
+        CompoundStatement statement8 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new RefType(new IntType())),
+                new CompoundStatement(
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(
+                                new PrintStatement(new HeapReadExpression(new VariableExpression("v"))),
+                                new CompoundStatement(
+                                        new HeapWriteStatement("v", new ValueExpression(new IntValue(30))),
+                                        new PrintStatement(new ArithmeticExpression("+", new HeapReadExpression(new VariableExpression("v")), new ValueExpression(new IntValue(5))))
+                                ))));
+        statement8.typecheck(new TheDictionary<>());
+
+        CompoundStatement statement9 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new RefType(new IntType())),
+                new CompoundStatement(
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(
+                                new VariableDeclarationStatement("a", new RefType(new RefType(new IntType()))),
+                                new CompoundStatement(
+                                        new HeapAllocationStatement("a", new VariableExpression("v")),
+                                        new CompoundStatement(
+                                                new HeapAllocationStatement("v", new ValueExpression(new IntValue(30))),
+                                                new PrintStatement(new HeapReadExpression(new HeapReadExpression(new VariableExpression("a"))))
+                                        )))));
+
+        statement9.typecheck(new TheDictionary<>());
+
+
+        CompoundStatement statement10 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new IntType()),
+                new CompoundStatement(
+                        new AssignmentStatement("v", new ValueExpression(new IntValue(4))),
+                        new CompoundStatement(
+                                new WhileStatement(new RelationalExpression(new VariableExpression("v"), ">", new ValueExpression(new IntValue(0))),
+                                        new CompoundStatement(
+                                                new PrintStatement(new VariableExpression("v")),
+                                                new AssignmentStatement("v", new ArithmeticExpression("-", new VariableExpression("v"), new ValueExpression(new IntValue(1)))))),
+                                new PrintStatement(new VariableExpression("v")))));
+        statement10.typecheck(new TheDictionary<>());
+
+        CompoundStatement statement11 = new CompoundStatement(
+                new VariableDeclarationStatement("v", new IntType()),
+                new CompoundStatement(
+                        new VariableDeclarationStatement("a", new RefType(new IntType())),
+                        new CompoundStatement(
+                                new AssignmentStatement("v", new ValueExpression(new IntValue(10))),
+                                new CompoundStatement(
+                                        new AssignmentStatement("v", new ValueExpression(new IntValue(10))),
+                                        new CompoundStatement(
+                                                new HeapAllocationStatement("a", new ValueExpression(new IntValue(22))),
+                                                new CompoundStatement(
+                                                        new ForkStatement(new CompoundStatement(
+                                                                new HeapWriteStatement("a", new ValueExpression(new IntValue(30))),
+                                                                new CompoundStatement(
+                                                                        new AssignmentStatement("v", new ValueExpression(new IntValue(32))),
+                                                                        new CompoundStatement(
+                                                                                new PrintStatement(new VariableExpression("v")),
+                                                                                new PrintStatement(new HeapReadExpression(new VariableExpression("a")))
+                                                                        )
+                                                                )
+                                                        )),
+                                                        new CompoundStatement(
+                                                                new PrintStatement(new VariableExpression("v")),
+                                                                new PrintStatement(new HeapReadExpression(new VariableExpression("a")))
+                                                        )
+                                                )
+                                        )
+                                ))));
+
+        statement11.typecheck(new TheDictionary<>());
+
+        programStatements = new ArrayList<>(Arrays.asList(example1, example2, example3, example4, example5, statement6, statement7, statement8, statement9, statement10, statement11));
     }
 
     private List<String> getStringRepresentations(){

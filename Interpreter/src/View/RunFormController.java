@@ -27,7 +27,7 @@ public class RunFormController implements Initializable {
     private TableColumn<Map.Entry<Integer, Integer>, Integer> heapAddressColumn;
 
     @FXML
-    private TableColumn<Map.Entry<Integer, Integer>, Integer> heapValueColumn;
+    private TableColumn<Map.Entry<IntValue, IntValue>, String> heapValueColumn;
 
     @FXML
     private TableView<Map.Entry<Integer, String>> fileTableView;
@@ -45,7 +45,7 @@ public class RunFormController implements Initializable {
     private TableColumn<Map.Entry<String, Value>, String> symbolTableVariableColumn;
 
     @FXML
-    private TableColumn<Map.Entry<String, Value>, Value> symbolTableValueColumn;
+    private TableColumn<Map.Entry<String, Value>, String> symbolTableValueColumn;
 
     @FXML
     private ListView<Value> outputListView;
@@ -81,13 +81,13 @@ public class RunFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         heapAddressColumn.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().getKey()).asObject());
-        heapValueColumn.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().getValue()).asObject());
+        heapValueColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
 
         fileIdentifierColumn.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().getKey()).asObject());
         fileNameColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue() + ""));
 
         symbolTableVariableColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey() + ""));
-        //symbolTableValueColumn.setCellValueFactory(p -> (ObservableValue<Value>) p/*new SimpleIntegerProperty(p.getValue().getValue()).asObject()*/);
+        symbolTableValueColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString())/*new SimpleIntegerProperty(p.getValue().getValue()).asObject()*/);
 
         programStateListView.setOnMouseClicked(mouseEvent -> { changeProgramState(getCurrentProgramState()); });
 
