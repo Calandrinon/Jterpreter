@@ -5,6 +5,7 @@ import Model.ADT.DictionaryInterface;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
@@ -63,4 +64,10 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
 
         return text.toString();
     }
+
+    @Override
+    public Iterable<Map.Entry<K, V>> getAll() {
+        return table.entrySet();
+    }
+
 }

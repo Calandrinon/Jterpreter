@@ -44,6 +44,19 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public void addProgramState(ProgramState initialProgramState) {
+        container.add(initialProgramState);
+    }
+
+    @Override
+    public ProgramState getProgramStateWithId(int currentId) {
+        for(ProgramState pr : container.getContainer())
+            if(pr.getId() == currentId)
+                return pr;
+        return null;
+    }
+
+    @Override
     public void logProgramState(ProgramState state) {
         try {
             PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));

@@ -14,4 +14,6 @@ public interface RepositoryInterface {
     void clear();
     TheList<ProgramState> getProgramList();
     void setProgramList(List<ProgramState> newList);
+    void addProgramState(ProgramState initialProgramState);
+    ProgramState getProgramStateWithId(int currentId);
 }

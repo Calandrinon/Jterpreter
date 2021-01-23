@@ -59,6 +59,26 @@ public class Controller {
         return theList;
     }
 
+    public void executeOneStep()
+    {
+        executor = Executors.newFixedThreadPool(2);
+        removeCompletedStates(repository.getProgramList());
+        List<ProgramState> programStates = repository.getProgramList().getContainer();
+        if(programStates.size() > 0)
+        {
+            try {
+                oneStepForAllStates(repository.getProgramList().getContainer());
+            } catch (InterruptedException e) {
+                System.out.println();
+            }
+            programStates.forEach(e -> {
+                repository.logProgramState(e);
+            });
+            removeCompletedStates(repository.getProgramList());
+            executor.shutdownNow();
+        }
+    }
+
     public void completeExecution() throws GeneralException, IOException, InterruptedException {
         executor = Executors.newFixedThreadPool(2);
         TheList<ProgramState> programList = removeCompletedStates(repository.getProgramList());
@@ -74,6 +94,7 @@ public class Controller {
     }
 
     public void oneStepForAllStates(List<ProgramState> list) throws InterruptedException {
+        executor = Executors.newFixedThreadPool(2);
         list.forEach(state -> repository.logProgramState(state));
 
         List<Callable<ProgramState>> callList = list.stream()

@@ -2,6 +2,7 @@ package Model.ADT;
 
 import Exceptions.StackException;
 
+import java.util.List;
 import java.util.Stack;
 
 public interface StackInterface<T> {
@@ -9,4 +10,5 @@ public interface StackInterface<T> {
     T pop() throws StackException;
     boolean isEmpty();
     String toString();
+    List<T> getAll();
 }

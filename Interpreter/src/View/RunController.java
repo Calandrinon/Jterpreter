@@ -4,11 +4,16 @@ import Controller.Controller;
 import Model.ProgramState;
 import Repository.Repository;
 import javafx.application.Application;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class RunController implements Initializable {
@@ -16,21 +21,23 @@ public class RunController implements Initializable {
     private Controller controller;
     private ProgramState programState;
 
+    @FXML
+    private TableView<Map.Entry<Integer, Integer>> heapTableView;
+    @FXML
+    private TableColumn<Map.Entry<Integer, Integer>, Integer> heapAddressColumn;
+    @FXML
+    private TableColumn<Map.Entry<Integer, Integer>, Integer> heapValueColumn;
+
     public RunController(Controller controller) {
         this.controller = controller;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            controller.completeExecution();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        heapAddressColumn.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().getKey()).asObject());
+        heapValueColumn.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().getValue()).asObject());
 
-        System.out.println("Program execution ended successfully.");
+
     }
 
     public void setRepository(Repository repository) {

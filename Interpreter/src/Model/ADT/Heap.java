@@ -69,4 +69,8 @@ public class Heap implements HeapInterface {
 
         return text.toString();
     }
+
+    public Iterable<Map.Entry<Integer, Value>> getAll() {
+        return table.entrySet();
+    }
 }

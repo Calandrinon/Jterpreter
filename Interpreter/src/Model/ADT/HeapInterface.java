@@ -16,4 +16,5 @@ public interface HeapInterface {
     public int getCurrentMaximumKey();
     String toString();
     Map<Integer, Value> getContent();
+
 }

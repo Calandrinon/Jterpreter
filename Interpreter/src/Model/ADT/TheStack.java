@@ -2,6 +2,8 @@ package Model.ADT;
 import Exceptions.StackException;
 import Model.ADT.StackInterface;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class TheStack<T> implements StackInterface<T> {
@@ -38,5 +40,11 @@ public class TheStack<T> implements StackInterface<T> {
         }
 
         return text;
+    }
+
+    @Override
+    public List<T> getAll() {
+        List<T> stackToList = new ArrayList(stack);
+        return stackToList;
     }
 }
