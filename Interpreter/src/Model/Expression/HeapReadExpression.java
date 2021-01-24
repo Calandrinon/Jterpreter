@@ -44,6 +44,6 @@ public class HeapReadExpression extends GeneralExpression {
     }
 
     public String toString() {
-        return expression.toString();
+        return "rh(" + expression.toString() + ")";
     }
 }

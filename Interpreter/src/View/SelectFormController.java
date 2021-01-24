@@ -26,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+import javax.management.ValueExp;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -328,7 +329,141 @@ public class SelectFormController implements Initializable {
 
         statement11.typecheck(new TheDictionary<>());
 
-        programStatements = new ArrayList<>(Arrays.asList(example1, example2, example3, example4, example5, statement6, statement7, statement8, statement9, statement10, statement11));
+        CompoundStatement statement12 = new CompoundStatement(
+                new CompoundStatement(
+                        new VariableDeclarationStatement("a", new RefType(new IntType())),
+                        new CompoundStatement(
+                                new HeapAllocationStatement("a", new ValueExpression(new IntValue(20))),
+                                new VariableDeclarationStatement("v", new IntType())
+                        )
+                ),
+        new CompoundStatement(
+                new ForStatement(new VariableExpression("v"), new ValueExpression(new IntValue(0)), new ValueExpression(new IntValue(3)), new ValueExpression(new IntValue(1)),
+                        new ForkStatement(
+                                new CompoundStatement(
+                                        new PrintStatement(new VariableExpression("v")),
+                                        new AssignmentStatement("v", new ArithmeticExpression("*", new VariableExpression("v"), new HeapReadExpression(new VariableExpression("a"))))
+                                )
+                        )
+                ),
+                new PrintStatement(new HeapReadExpression(new VariableExpression("a")))
+        )
+        );
+        statement12.typecheck(new TheDictionary<>());
+
+
+        CompoundStatement statement13 = new CompoundStatement(
+        new CompoundStatement(
+        new VariableDeclarationStatement("a", new RefType(new IntType())),
+        new CompoundStatement(
+        new VariableDeclarationStatement("b", new RefType(new IntType())),
+        new VariableDeclarationStatement("v", new IntType())
+        )
+        ),
+        new CompoundStatement(
+        new HeapAllocationStatement("a", new ValueExpression(new IntValue(0))),
+        new CompoundStatement(
+        new HeapAllocationStatement("b", new ValueExpression(new IntValue(0))),
+        new CompoundStatement(
+        new HeapWriteStatement("a", new ValueExpression(new IntValue(1))),
+        new CompoundStatement(
+        new HeapWriteStatement("b", new ValueExpression(new IntValue(2))),
+        new CompoundStatement(
+        new ConditionalAssignmentStatement(new VariableExpression("v"), new RelationalExpression(new HeapReadExpression(new VariableExpression("a")), "<", new HeapReadExpression(new VariableExpression("b"))), new ValueExpression(new IntValue(100)), new ValueExpression(new IntValue(200))),
+        new CompoundStatement(
+        new PrintStatement(new VariableExpression("v")),
+        new CompoundStatement(
+        new ConditionalAssignmentStatement(new VariableExpression("v"), new RelationalExpression(new ArithmeticExpression("-", new HeapReadExpression(new VariableExpression("b")), new ValueExpression(new IntValue(2))), ">", new HeapReadExpression(new VariableExpression("a"))), new ValueExpression(new IntValue(100)), new ValueExpression(new IntValue(200))),
+        new PrintStatement(new VariableExpression("v"))
+        )
+        )
+        )
+        )
+        )
+        )
+        )
+        );
+
+        statement13.typecheck(new TheDictionary<>());
+
+        CompoundStatement statement14 = new CompoundStatement(
+        new CompoundStatement(
+        new VariableDeclarationStatement("a", new IntType()),
+        new CompoundStatement(
+        new VariableDeclarationStatement("b", new IntType()),
+        new CompoundStatement(
+        new VariableDeclarationStatement("c", new IntType()),
+        new CompoundStatement(
+        new AssignmentStatement("a", new ValueExpression(new IntValue(1))),
+        new CompoundStatement(
+        new AssignmentStatement("b", new ValueExpression(new IntValue(2))),
+        new AssignmentStatement("c", new ValueExpression(new IntValue(5)))
+        )
+        )
+        )
+        )
+        ),
+        new CompoundStatement(
+        new SwitchStatement(new ArithmeticExpression("*", new VariableExpression("a"), new ValueExpression(new IntValue(10))),
+                new ArithmeticExpression("*", new VariableExpression("b"), new VariableExpression("c")),
+                new ValueExpression(new IntValue(10)),
+                new CompoundStatement(
+                        new PrintStatement(new VariableExpression("a")),
+                        new PrintStatement(new VariableExpression("b"))
+                ),
+                new CompoundStatement(
+                        new PrintStatement(new ValueExpression(new IntValue(100))),
+                        new PrintStatement(new ValueExpression(new IntValue(200)))
+                ),
+                new PrintStatement(new ValueExpression(new IntValue(300)))
+                ),
+                new PrintStatement(new ValueExpression(new IntValue(300)))
+        )
+        );
+
+        statement14.typecheck(new TheDictionary<>());
+
+        CompoundStatement statement15 = new CompoundStatement(
+        new CompoundStatement(
+        new VariableDeclarationStatement("v", new IntType()),
+        new AssignmentStatement("v", new ValueExpression(new IntValue(0)))
+        ),
+        new CompoundStatement(
+        new RepeatStatement(new CompoundStatement(
+                new ForkStatement(new CompoundStatement(new PrintStatement(new VariableExpression("v")), new AssignmentStatement("v", new ArithmeticExpression("-", new VariableExpression("v"), new ValueExpression(new IntValue(1)))))),
+                new AssignmentStatement("v", new ArithmeticExpression("+", new VariableExpression("v"), new ValueExpression(new IntValue(1))))
+        ),
+                new RelationalExpression(new VariableExpression("v"), "==", new ValueExpression(new IntValue(3)))),
+        new PrintStatement(new ArithmeticExpression("*", new VariableExpression("v"), new ValueExpression(new IntValue(10))))
+        )
+        );
+
+        statement15.typecheck(new TheDictionary<>());
+
+        CompoundStatement statement16 = new CompoundStatement(
+        new CompoundStatement(
+        new VariableDeclarationStatement("v", new IntType()),
+        new AssignmentStatement("v", new ValueExpression(new IntValue(10)))
+        ),
+        new CompoundStatement(
+        new ForkStatement(
+        new CompoundStatement(
+        new AssignmentStatement("v", new ArithmeticExpression("-", new VariableExpression("v"), new ValueExpression(new IntValue(1)))),
+        new CompoundStatement(
+        new AssignmentStatement("v", new ArithmeticExpression("-", new VariableExpression("v"), new ValueExpression(new IntValue(1)))),
+        new PrintStatement(new VariableExpression("v"))
+        )
+        )
+        ),
+        new CompoundStatement(
+        new SleepStatement(new ValueExpression(new IntValue(10))),
+        new PrintStatement(new ArithmeticExpression("*", new VariableExpression("v"), new ValueExpression(new IntValue(10))))
+        )
+        )
+        );
+
+        statement16.typecheck(new TheDictionary<>());
+        programStatements = new ArrayList<>(Arrays.asList(example1, example2, example3, example4, example5, statement6, statement7, statement8, statement9, statement10, statement11, statement12, statement13, statement14, statement15, statement16));
     }
 
     private List<String> getStringRepresentations(){
@@ -352,7 +487,6 @@ public class SelectFormController implements Initializable {
 
             ProgramState initialProgramState = ProgramState.createNewProgramState(programStatements.get(index));
             RepositoryInterface repository = new Repository("log" + index + ".txt");
-            //repository.addProgramState(initialProgramState);
             Controller ctrl = new Controller(repository, initialProgramState);
 
             mainWindowController.setController(ctrl);
