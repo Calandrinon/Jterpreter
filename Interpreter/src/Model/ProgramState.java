@@ -17,18 +17,23 @@ public class ProgramState {
     private DictionaryInterface<String, BufferedReader> fileTable;
     private DictionaryInterface<Integer, Integer> lockTable;
     private DictionaryInterface<Integer, Integer> latchTable;
+    private SemaphoreInterface semaphoreTable;
     private ListInterface<Value> out;
     private HeapInterface heap;
     private StatementInterface originalProgram;
+
+
     private static Object lockForIDs = new Object();
     private static int numberOfIDs = 0;
     private int id = 0;
 
     private static int lockAddress = 1;
     private static int latchAddress = 1;
+    private static int semaphoreAddress = 1;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
-                        DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, DictionaryInterface<Integer, Integer> lockTable, ListInterface<Value> out,
+                        DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, DictionaryInterface<Integer, Integer> lockTable,
+                        DictionaryInterface<Integer, Integer> latchTable, SemaphoreInterface semaphoreTable, ListInterface<Value> out,
                         StatementInterface originalProgram) {
         this.executionStack = executionStack;
         this.symbolTable = symbolTable;
@@ -37,6 +42,8 @@ public class ProgramState {
         this.originalProgram = originalProgram;
         this.heap = heap;
         this.lockTable = lockTable;
+        this.latchTable = latchTable;
+        this.semaphoreTable = semaphoreTable;
 
         synchronized (lockForIDs) {
             numberOfIDs++;
@@ -53,8 +60,10 @@ public class ProgramState {
         ListInterface<Value> output = new TheList<Value>();
         HeapInterface heap = new Heap();
         DictionaryInterface<Integer, Integer> lockTable = new TheDictionary<>();
+        DictionaryInterface<Integer, Integer> latchTable = new TheDictionary<>();
+        SemaphoreInterface semaphoreTable = new Semaphore();
 
-        return new ProgramState(executionStack, symbolTable, fileTable, heap, lockTable, output, statement);
+        return new ProgramState(executionStack, symbolTable, fileTable, heap, lockTable, latchTable, semaphoreTable, output, statement);
     }
 
     public boolean isNotCompleted() {
@@ -92,6 +101,7 @@ public class ProgramState {
 
     public DictionaryInterface<Integer, Integer> getLockTable() {return lockTable;}
     public DictionaryInterface<Integer, Integer> getLatchTable() {return latchTable;}
+    public SemaphoreInterface getSemaphoreTable() {return semaphoreTable;}
 
     public ListInterface<Value> getOutput() {
         return out;
@@ -106,6 +116,7 @@ public class ProgramState {
     }
 
     public synchronized int getLatchTableAddress() { return latchAddress++; }
+    public synchronized int getSemaphoreAddress() { return semaphoreAddress++; }
 
     public void setExecutionStack(StackInterface<StatementInterface> executionStack) {
         this.executionStack = executionStack;
@@ -129,6 +140,10 @@ public class ProgramState {
 
     public void setLatchTable(DictionaryInterface<Integer, Integer> latchTable) {
         this.latchTable = latchTable;
+    }
+
+    public void setSemaphoreTable(SemaphoreInterface semaphoreTable) {
+        this.semaphoreTable = semaphoreTable;
     }
 
     public void setOutput(ListInterface<Value> out) {

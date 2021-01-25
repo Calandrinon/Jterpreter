@@ -23,7 +23,7 @@ public class ForkStatement implements StatementInterface {
         DictionaryInterface<String, Value> clonedSymbolTable = state.getSymbolTable().clone();
 
         return new ProgramState(newStack, clonedSymbolTable, state.getFileTable(),
-                state.getHeap(), state.getLockTable(), state.getOutput(), statement);
+                state.getHeap(), state.getLockTable(), state.getLatchTable(), state.getSemaphoreTable(), state.getOutput(), statement);
     }
 
     @Override

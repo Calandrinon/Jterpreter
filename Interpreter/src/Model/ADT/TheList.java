@@ -5,6 +5,7 @@ import Model.ProgramState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TheList<T> implements ListInterface<T> {
@@ -32,6 +33,11 @@ public class TheList<T> implements ListInterface<T> {
     @Override
     public void remove(int index) {
         list.remove(index);
+    }
+
+    @Override
+    public void removeElement(Object object) {
+        list.remove(object);
     }
 
     @Override
@@ -71,6 +77,12 @@ public class TheList<T> implements ListInterface<T> {
 
     public int size() {
         return list.size();
+    }
+
+    @Override
+    public boolean contains(T element) {
+        Optional<T> result = list.stream().findAny();
+        return result.isPresent();
     }
 
     public void pushFront(T state) {
