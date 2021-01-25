@@ -15,6 +15,7 @@ public class ProgramState {
     private StackInterface<StatementInterface> executionStack;
     private DictionaryInterface<String, Value> symbolTable;
     private DictionaryInterface<String, BufferedReader> fileTable;
+    private DictionaryInterface<Integer, Integer> lockTable;
     private ListInterface<Value> out;
     private HeapInterface heap;
     private StatementInterface originalProgram;
@@ -22,8 +23,10 @@ public class ProgramState {
     private static int numberOfIDs = 0;
     private int id = 0;
 
+    private int lockAddress = 1;
+
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
-                        DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, ListInterface<Value> out,
+                        DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, DictionaryInterface<Integer, Integer> lockTable, ListInterface<Value> out,
                         StatementInterface originalProgram) {
         this.executionStack = executionStack;
         this.symbolTable = symbolTable;
@@ -31,6 +34,7 @@ public class ProgramState {
         this.out = out;
         this.originalProgram = originalProgram;
         this.heap = heap;
+        this.lockTable = lockTable;
 
         synchronized (lockForIDs) {
             numberOfIDs++;
@@ -46,8 +50,9 @@ public class ProgramState {
         DictionaryInterface<String, BufferedReader> fileTable = new TheDictionary<String, BufferedReader>();
         ListInterface<Value> output = new TheList<Value>();
         HeapInterface heap = new Heap();
+        DictionaryInterface<Integer, Integer> lockTable = new TheDictionary<>();
 
-        return new ProgramState(executionStack, symbolTable, fileTable, heap, output, statement);
+        return new ProgramState(executionStack, symbolTable, fileTable, heap, lockTable, output, statement);
     }
 
     public boolean isNotCompleted() {
@@ -83,12 +88,18 @@ public class ProgramState {
         return heap;
     }
 
+    public DictionaryInterface<Integer, Integer> getLockTable() {return lockTable;}
+
     public ListInterface<Value> getOutput() {
         return out;
     }
 
     public StatementInterface getOriginalProgram() {
         return originalProgram;
+    }
+
+    public int getLockTableAddress() {
+        return lockAddress++;
     }
 
     public void setExecutionStack(StackInterface<StatementInterface> executionStack) {
@@ -105,6 +116,10 @@ public class ProgramState {
 
     public void setHeap(HeapInterface heap) {
         this.heap = heap;
+    }
+
+    public void setLockTable(DictionaryInterface<Integer, Integer> lockTable) {
+        this.lockTable = lockTable;
     }
 
     public void setOutput(ListInterface<Value> out) {

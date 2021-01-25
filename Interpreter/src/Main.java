@@ -19,6 +19,7 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws GeneralException, IOException {
+        /**
         ///--------------------------------------------------------------------------------------------
         StatementInterface example1 = new CompoundStatement(
                 new VariableDeclarationStatement("v", new IntType()),
@@ -304,5 +305,6 @@ public class Main {
         textMenu.addCommand(new RunExample("10", statement10.toString(), controller10));
         textMenu.addCommand(new RunExample("11", statement11.toString(), controller11));
         textMenu.show();
+        **/
     }
 }

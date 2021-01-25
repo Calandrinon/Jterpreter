@@ -21,7 +21,7 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
     }
 
     @Override
-    public V lookup(K key) throws DictionaryException {
+    public synchronized V lookup(K key) throws DictionaryException {
         V value = (V)table.get(key);
         if (value == null)
             throw new DictionaryException("The key does not exist in the table.");
@@ -38,7 +38,7 @@ public class TheDictionary<K, V> implements DictionaryInterface<K, V> {
         return table;
     }
 
-    public void setContent(HashMap<K, V> newTable) {
+    public synchronized void setContent(HashMap<K, V> newTable) {
         table = newTable;
     }
 
