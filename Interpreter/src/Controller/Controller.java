@@ -69,7 +69,7 @@ public class Controller {
             try {
                 oneStepForAllStates(repository.getProgramList().getContainer());
             } catch (InterruptedException e) {
-                System.out.println();
+                System.out.println(e);
             }
             programStates.forEach(e -> {
                 repository.logProgramState(e);
@@ -98,6 +98,7 @@ public class Controller {
         list.forEach(state -> repository.logProgramState(state));
 
         List<Callable<ProgramState>> callList = list.stream()
+                .filter((ProgramState p) -> !p.getExecutionStack().isEmpty())
                 .map((ProgramState p) -> (Callable<ProgramState>)(()->{return p.oneStepExecution();}))
                 .collect(Collectors.toList());
 
