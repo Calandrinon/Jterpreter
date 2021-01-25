@@ -15,10 +15,10 @@ import Model.Value.Value;
 
 import java.io.IOException;
 
-public class AwaitStatement implements StatementInterface {
+public class AwaitLatchStatement implements StatementInterface {
     private VariableExpression var;
 
-    public AwaitStatement(VariableExpression var){
+    public AwaitLatchStatement(VariableExpression var){
         this.var = var;
     }
 
@@ -56,7 +56,7 @@ public class AwaitStatement implements StatementInterface {
 
     @Override
     public StatementInterface clone() {
-        return new AwaitStatement(var);
+        return new AwaitLatchStatement(var);
     }
 
     @Override

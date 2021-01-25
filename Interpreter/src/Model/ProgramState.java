@@ -7,9 +7,11 @@ import Model.Statement.ForkStatement;
 import Model.Statement.StatementInterface;
 import Model.Type.Type;
 import Model.Value.Value;
+import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 public class ProgramState {
     private StackInterface<StatementInterface> executionStack;
@@ -18,6 +20,7 @@ public class ProgramState {
     private DictionaryInterface<Integer, Integer> lockTable;
     private DictionaryInterface<Integer, Integer> latchTable;
     private SemaphoreInterface semaphoreTable;
+    private DictionaryInterface<Integer, Pair<Integer, ListInterface<Integer>>> barrierTable;
     private ListInterface<Value> out;
     private HeapInterface heap;
     private StatementInterface originalProgram;
@@ -30,6 +33,7 @@ public class ProgramState {
     private static int lockAddress = 1;
     private static int latchAddress = 1;
     private static int semaphoreAddress = 1;
+    private static int barrierAddress = 1;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
                         DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, DictionaryInterface<Integer, Integer> lockTable,
@@ -102,6 +106,9 @@ public class ProgramState {
     public DictionaryInterface<Integer, Integer> getLockTable() {return lockTable;}
     public DictionaryInterface<Integer, Integer> getLatchTable() {return latchTable;}
     public SemaphoreInterface getSemaphoreTable() {return semaphoreTable;}
+    public DictionaryInterface<Integer, Pair<Integer, ListInterface<Integer>>> getBarrierTable() {
+        return barrierTable;
+    }
 
     public ListInterface<Value> getOutput() {
         return out;
@@ -117,6 +124,7 @@ public class ProgramState {
 
     public synchronized int getLatchTableAddress() { return latchAddress++; }
     public synchronized int getSemaphoreAddress() { return semaphoreAddress++; }
+    public synchronized int getBarrierAddress() { return barrierAddress++; }
 
     public void setExecutionStack(StackInterface<StatementInterface> executionStack) {
         this.executionStack = executionStack;
@@ -144,6 +152,10 @@ public class ProgramState {
 
     public void setSemaphoreTable(SemaphoreInterface semaphoreTable) {
         this.semaphoreTable = semaphoreTable;
+    }
+
+    public void setBarrierTable(DictionaryInterface<Integer, Pair<Integer, ListInterface<Integer>>> barrierTable) {
+        this.barrierTable = barrierTable;
     }
 
     public void setOutput(ListInterface<Value> out) {

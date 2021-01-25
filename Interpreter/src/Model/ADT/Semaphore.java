@@ -11,7 +11,7 @@ public class Semaphore implements SemaphoreInterface {
     }
 
     @Override
-    public void setSemaphoreTable(DictionaryInterface<Integer, Pair<Integer, ListInterface<Integer>>> semaphoreTable) {
+    public void setSemaphoreTable(DictionaryInterface<Integer, Pair<Integer, ListInterface<Integer>>> semaphore) {
         this.semaphore = semaphore;
     }
 
