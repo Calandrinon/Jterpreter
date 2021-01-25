@@ -16,6 +16,7 @@ public class ProgramState {
     private DictionaryInterface<String, Value> symbolTable;
     private DictionaryInterface<String, BufferedReader> fileTable;
     private DictionaryInterface<Integer, Integer> lockTable;
+    private DictionaryInterface<Integer, Integer> latchTable;
     private ListInterface<Value> out;
     private HeapInterface heap;
     private StatementInterface originalProgram;
@@ -23,7 +24,8 @@ public class ProgramState {
     private static int numberOfIDs = 0;
     private int id = 0;
 
-    private int lockAddress = 1;
+    private static int lockAddress = 1;
+    private static int latchAddress = 1;
 
     public ProgramState(StackInterface<StatementInterface> executionStack, DictionaryInterface<String, Value> symbolTable,
                         DictionaryInterface<String, BufferedReader> fileTable, HeapInterface heap, DictionaryInterface<Integer, Integer> lockTable, ListInterface<Value> out,
@@ -89,6 +91,7 @@ public class ProgramState {
     }
 
     public DictionaryInterface<Integer, Integer> getLockTable() {return lockTable;}
+    public DictionaryInterface<Integer, Integer> getLatchTable() {return latchTable;}
 
     public ListInterface<Value> getOutput() {
         return out;
@@ -98,9 +101,11 @@ public class ProgramState {
         return originalProgram;
     }
 
-    public int getLockTableAddress() {
+    public synchronized int getLockTableAddress() {
         return lockAddress++;
     }
+
+    public synchronized int getLatchTableAddress() { return latchAddress++; }
 
     public void setExecutionStack(StackInterface<StatementInterface> executionStack) {
         this.executionStack = executionStack;
@@ -120,6 +125,10 @@ public class ProgramState {
 
     public void setLockTable(DictionaryInterface<Integer, Integer> lockTable) {
         this.lockTable = lockTable;
+    }
+
+    public void setLatchTable(DictionaryInterface<Integer, Integer> latchTable) {
+        this.latchTable = latchTable;
     }
 
     public void setOutput(ListInterface<Value> out) {
